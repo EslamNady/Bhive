@@ -131,11 +131,11 @@ class EditTemplate extends Component {
                 <LogReader getLog={this.getLogTasks} />
                 <div className="create-project-hr" ></div>
                 <form className="form-group project-form">
-                    <label for="project-name">Project Name</label>
+                    <label htmlFor="project-name">Project Name</label>
                     <input className="form-control" id="project-name" type="text" name="projectName" ref="projectName" placeholder="Project Name" />
-                    <label for="description">Description</label>
+                    <label htmlFor="description">Description</label>
                     <textarea className="form-control" id="description" type="text" name="description" ref="description" placeholder="Project Description" />
-                    <label for="startDate">Start date</label>
+                    <label htmlFor="startDate">Start date</label>
                     <input className="form-control" id="startDate" type="date" name="startDate" ref="startDate" placeholder="project Start Date" />
                 </form>
                 <div className="create-project-hr" style={{ height: 2 + "px" }} ></div>
@@ -154,7 +154,7 @@ class EditTemplate extends Component {
                     <button className="btn " data-toggle="modal" data-target="#created" onClick={this.onFinish}>Create New Project</button>
                 </div>
 
-                <div className="modal fade" id="created" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div className="modal fade" id="created" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div className="modal-dialog modal-dialog-centered" role="document">
                         <div className="modal-content">
 

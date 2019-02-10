@@ -18,11 +18,11 @@ class ActivityTimeline extends Migration
 
             $table->integer('employee_id')->unsigned()->nullable();
             $table->foreign('employee_id')->references('id')
-            ->on('employees')->onDelete('cascade');
+            ->on('employees')->onDelete('cascade')->onUpdate('cascade');
 
             $table->integer('task_id')->unsigned()->nullable();
             $table->foreign('task_id')->references('id')
-            ->on('tasks')->onDelete('cascade');
+            ->on('tasks')->onDelete('cascade')->onUpdate('cascade');
 
             $table->timestamps();
         });

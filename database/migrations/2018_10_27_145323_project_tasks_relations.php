@@ -17,11 +17,11 @@ class ProjectTasksRelations extends Migration
 
             $table->integer('predecessor_id')->unsigned()->nullable();
                 $table->foreign('predecessor_id')->references('id')
-                ->on('tasks')->onDelete('cascade');
+                ->on('tasks')->onDelete('cascade')->onUpdate('cascade');
 
                 $table->integer('successor_id')->unsigned()->nullable();
                 $table->foreign('successor_id')->references('id')
-                ->on('tasks')->onDelete('cascade');
+                ->on('tasks')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

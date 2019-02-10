@@ -13,4 +13,7 @@ class Project extends Model
     {
         return $this->hasMany('App\Task');
     }
+    public function Manager(){
+        return $this->belongsTo('App\User');
+    }
 }

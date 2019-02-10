@@ -59324,19 +59324,19 @@ var EditTemplate = function (_Component) {
                     { className: "form-group project-form" },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "label",
-                        { "for": "project-name" },
+                        { htmlFor: "project-name" },
                         "Project Name"
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { className: "form-control", id: "project-name", type: "text", name: "projectName", ref: "projectName", placeholder: "Project Name" }),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "label",
-                        { "for": "description" },
+                        { htmlFor: "description" },
                         "Description"
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("textarea", { className: "form-control", id: "description", type: "text", name: "description", ref: "description", placeholder: "Project Description" }),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "label",
-                        { "for": "startDate" },
+                        { htmlFor: "startDate" },
                         "Start date"
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { className: "form-control", id: "startDate", type: "date", name: "startDate", ref: "startDate", placeholder: "project Start Date" })
@@ -59378,7 +59378,7 @@ var EditTemplate = function (_Component) {
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
-                    { className: "modal fade", id: "created", tabindex: "-1", role: "dialog", "aria-labelledby": "exampleModalCenterTitle", "aria-hidden": "true" },
+                    { className: "modal fade", id: "created", tabIndex: "-1", role: "dialog", "aria-labelledby": "exampleModalCenterTitle", "aria-hidden": "true" },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "div",
                         { className: "modal-dialog modal-dialog-centered", role: "document" },

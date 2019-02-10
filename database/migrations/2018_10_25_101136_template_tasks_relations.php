@@ -17,11 +17,11 @@ class TemplateTasksRelations extends Migration
             
             $table->integer('predecessor_id')->unsigned()->nullable();
             $table->foreign('predecessor_id')->references('id')
-            ->on('template_tasks')->onDelete('cascade');
+            ->on('template_tasks')->onDelete('cascade')->onUpdate('cascade');
 
             $table->integer('successor_id')->unsigned()->nullable();
             $table->foreign('successor_id')->references('id')
-            ->on('template_tasks')->onDelete('cascade');
+            ->on('template_tasks')->onDelete('cascade')->onUpdate('cascade');
     
         });
     }

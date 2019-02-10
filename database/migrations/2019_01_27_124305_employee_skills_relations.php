@@ -18,11 +18,11 @@ class EmployeeSkillsRelations extends Migration
             $table->increments('id');
             $table->integer('skill_id')->unsigned()->nullable();
             $table->foreign('skill_id')->references('id')
-            ->on('skills')->onDelete('cascade');
+            ->on('skills')->onDelete('cascade')->onUpdate('cascade');
 
             $table->integer('employee_id')->unsigned()->nullable();
             $table->foreign('employee_id')->references('id')
-            ->on('employees')->onDelete('cascade');
+            ->on('employees')->onDelete('cascade')->onUpdate('cascade');
 
             $table->decimal('skill_level')->unsigned()->default(0);
 
