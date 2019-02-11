@@ -13,6 +13,7 @@ use App\Project;
 use App\Task;
 use App\Skill;
 use App\Employee;
+use Auth;
 class ProjectController extends Controller
 {
     /**
@@ -55,6 +56,7 @@ class ProjectController extends Controller
         $newproject =new Project;
         $newproject->name= $request->get('name');
         $newproject->description= $request->get('description');
+        $newproject->manager_id=Auth::id();
         $newproject->startDate= $request->get('startDate');
 
         $newproject->save();
@@ -173,8 +175,8 @@ class ProjectController extends Controller
 
             }
         }
-        //geting all employees
-        $employees=Employee::all();
+        // //geting all employees
+        // $employees=Employee::all();
 
         $assignedTasks=Task::where('project_id',$project_id)->get();
         foreach($assignedTasks as $assignedTask){
@@ -183,7 +185,8 @@ class ProjectController extends Controller
             $firstEmp=true;
             $minDistance=0;
             $empID=null;
-
+            //geting all employees
+            $employees=Employee::all();
             foreach($employees as $employee){
                 $activities=$employee->tasks;
                 $busy=false;
@@ -191,7 +194,7 @@ class ProjectController extends Controller
                 foreach($activities as $activity){
 
                     $activityTask=Task::where('id',$activity->id)->first();
-                    if( ($assignedTask->startDate < $activityTask->startDate && $assignedTask->endDate<$activityTask->startDate) || $assignedTask->startDate>$activityTask->endDate )
+                    if( ($assignedTask->startDate <= $activityTask->startDate && $assignedTask->endDate <= $activityTask->startDate) || $assignedTask->startDate >= $activityTask->endDate )
                         continue;
                     else{
                         $busy=true;

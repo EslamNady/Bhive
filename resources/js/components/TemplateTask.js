@@ -7,7 +7,7 @@ class TemplateTask extends Component {
         this.state = {
             predecessors: this.props.task.predecessors,
             skills: this.props.task.skills,
-            edit: true,
+            edit: false,
             allSkills: this.props.allSkills,
             allTasks: []
         };

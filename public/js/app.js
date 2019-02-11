@@ -59445,7 +59445,7 @@ var TemplateTask = function (_Component) {
         _this.state = {
             predecessors: _this.props.task.predecessors,
             skills: _this.props.task.skills,
-            edit: true,
+            edit: false,
             allSkills: _this.props.allSkills,
             allTasks: []
         };
@@ -62046,19 +62046,28 @@ var TaskInfoCard = function (_Component) {
                     null,
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
-                        null,
+                        { className: 'h3' },
                         this.props.task.name
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         null,
-                        'Slack: ',
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            { className: 'text-muted' },
+                            'Slack:'
+                        ),
+                        ' ',
                         this.props.task.slack
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         null,
-                        'no employee is assigned'
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'small',
+                            { className: 'text-muted' },
+                            'no employee is assigned'
+                        )
                     )
                 );
             } else {
@@ -62067,21 +62076,35 @@ var TaskInfoCard = function (_Component) {
                     null,
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
-                        null,
+                        { className: 'h3' },
                         this.props.task.name
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         null,
-                        'Slack: ',
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            { className: 'text-muted' },
+                            'Slack:'
+                        ),
+                        ' ',
                         this.props.task.slack
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         null,
-                        this.state.employee.title,
-                        ' / ',
-                        this.state.employee.name
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'label',
+                            { className: 'text-muted' },
+                            this.state.employee.title
+                        ),
+                        ' /',
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'span',
+                            { className: 'font-weight-bold' },
+                            ' ',
+                            this.state.employee.name
+                        )
                     )
                 );
             }
