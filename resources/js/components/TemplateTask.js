@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import TaskSkill from "./TaskSkill";
+import TaskPredecessor from "./TaskProdecessor";
 
 class TemplateTask extends Component {
     constructor(props) {
@@ -11,7 +12,7 @@ class TemplateTask extends Component {
             allSkills: this.props.allSkills,
             allTasks: []
         };
-        this.edit = this.edit.bind(this); //hna
+        this.edit = this.edit.bind(this);
         this.save = this.save.bind(this);
         this.add = this.add.bind(this);
         this.deletePredecessor = this.deletePredecessor.bind(this);
@@ -19,6 +20,42 @@ class TemplateTask extends Component {
         this.addSkill = this.addSkill.bind(this);
         this.delete = this.delete.bind(this);
         this.deleteSkill = this.deleteSkill.bind(this);
+
+
+
+    }
+    componentWillReceiveProps(nextProps) {
+        // You don't have to do this check first, but it can help prevent an unneeded render
+        // if (nextProps.startTime !== this.state.startTime) {
+        //   this.setState({ startTime: nextProps.startTime });
+        // }
+
+        var allTasks = nextProps.allTasks.slice();
+        var predecessors = this.state.predecessors.slice();
+        allTasks.splice(nextProps.index, 1);
+        for (var j = 0; j < predecessors.length; j++) {
+            var found = false;
+            for (var i = 0; i < allTasks.length; i++) {
+
+                // console.log(this.state.predecessors[j].id + " " + allTasks[i].id);
+                if (predecessors[j].id == allTasks[i].id) {
+                    predecessors[j].name = allTasks[i].name;
+                    predecessors[j].duration = allTasks[i].duration;
+                    allTasks.splice(i, 1);
+                    found = true;
+                }
+            }
+            if (!found) {
+                predecessors.splice(j, 1);
+            }
+
+        }
+
+        this.setState({
+            allTasks: allTasks,
+            predecessors: predecessors
+        });
+
     }
     componentWillMount() {
         var allTasks = this.props.allTasks.slice();
@@ -26,6 +63,7 @@ class TemplateTask extends Component {
         this.setState({
             allTasks: allTasks
         });
+
         var newSkills = this.state.allSkills.slice();
 
         for (var j = 0; j < this.state.skills.length; j++) {
@@ -45,6 +83,7 @@ class TemplateTask extends Component {
     }
 
     edit() {
+
         this.setState({
             edit: true
         });
@@ -67,20 +106,36 @@ class TemplateTask extends Component {
         this.props.onSave(this.props.index, task);
     }
     add() {
-        var array = this.state.predecessors;
-        var Task = this.state.allTasks[this.refs.allTasksContainer.value];
-        array.push(Task);
-        var allTasks = this.state.allTasks.slice();
-        allTasks.splice(this.refs.allTasksContainer.value, 1);
-        this.setState({
-            predecessors: array,
-            allTasks: allTasks
-        });
+        if (this.refs.allTasksContainer.value != "") {
+            var array = this.state.predecessors;
+            var Task = this.state.allTasks[this.refs.allTasksContainer.value];
+            array.push(Task);
+            var allTasks = this.state.allTasks.slice();
+            allTasks.splice(this.refs.allTasksContainer.value, 1);
+            this.setState({
+                predecessors: array,
+                allTasks: allTasks
+            });
+        }
     }
     deletePredecessor(index) {
-        var array = this.state.predecessors;
-        array.splice(index, 1);
-        this.setState({ predecessors: array });
+
+        var array = this.state.predecessors.slice();
+        var array2 = this.state.allTasks;
+        var obj = array.splice(index, 1);
+
+        for (var i = 0; i < this.props.allTasks.length; i++) {
+            if (this.props.allTasks[i].id == obj[0].id) {
+                array2.push(this.props.allTasks[i]);
+                break;
+            }
+        }
+
+
+        this.setState({
+            predecessors: array,
+            allTasks: array2
+        });
     }
     saveSkillLevel(skillID, value) {
         var array = this.state.skills;
@@ -124,10 +179,7 @@ class TemplateTask extends Component {
                     <div className="predecessors-box">
                         <div className="predecessors-box-insider d-flex flex-wrap justify-content-start">
                             {this.props.task.predecessors.map((predecessor, j) => (
-                                <div className="predecessor mx-3 my-2 px-2 py-1 " key={j}>
-                                    <div className="predecessor-name">{predecessor.name}</div>
-                                    <div className="predecessor-duration ml-4">{predecessor.duration} <small>Days</small></div>
-                                </div>
+                                <TaskPredecessor key={j} index={j} name={predecessor.name} onDelete={this.deletePredecessor} duration={predecessor.duration} edit={false}></TaskPredecessor>
                             ))}
                         </div>
                     </div>
@@ -180,14 +232,7 @@ class TemplateTask extends Component {
                     <div className="predecessors-box mt-2">
                         <div className="predecessors-box-insider d-flex flex-wrap justify-content-start">
                             {this.state.predecessors.map((predecessor, i) => (
-
-                                <div key={i} className="predecessor mx-3 my-2 px-2 py-1">
-                                    <div className="predecessor-name">{predecessor.name}</div>
-                                    <div className="predecessor-duration ml-4">{predecessor.duration} <small>Days</small></div>
-
-                                    <div className="delete-btn ml-3" onClick={this.deletePredecessor.bind(i)}> <img src="/images/icons/cancel.png" alt="delete" /></div>
-                                </div>
-
+                                <TaskPredecessor key={i} index={i} name={predecessor.name} onDelete={this.deletePredecessor} duration={predecessor.duration} edit={true}></TaskPredecessor>
 
                             ))}
                         </div>
@@ -232,6 +277,7 @@ class TemplateTask extends Component {
         );
     }
     render() {
+
         if (this.state.edit) {
             return this.renderForm();
         } else {

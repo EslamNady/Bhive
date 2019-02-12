@@ -59299,6 +59299,18 @@ var EditTemplate = function (_Component) {
         key: "deleteTask",
         value: function deleteTask(index) {
             var array = this.state.tasks.slice();
+
+            for (var i = 0; i < array.length; i++) {
+                //delete it from preddecessor
+                if (i == index) continue;else {
+                    for (var j = 0; j < array[i].predecessors.length; j++) {
+                        if (array[index].id == array[i].predecessors[j].id) {
+                            array[i].predecessors.splice(j, 1);
+                        }
+                    }
+                }
+            }
+
             array.splice(index, 1);
             this.setState({ tasks: array });
         }
@@ -59363,7 +59375,7 @@ var EditTemplate = function (_Component) {
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "button",
                         { className: "btn ", onClick: this.add },
-                        "ADD"
+                        "ADD Task"
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "button",
@@ -59423,6 +59435,7 @@ var EditTemplate = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__TaskSkill__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__TaskProdecessor__ = __webpack_require__(82);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -59430,6 +59443,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -59449,7 +59463,7 @@ var TemplateTask = function (_Component) {
             allSkills: _this.props.allSkills,
             allTasks: []
         };
-        _this.edit = _this.edit.bind(_this); //hna
+        _this.edit = _this.edit.bind(_this);
         _this.save = _this.save.bind(_this);
         _this.add = _this.add.bind(_this);
         _this.deletePredecessor = _this.deletePredecessor.bind(_this);
@@ -59457,10 +59471,44 @@ var TemplateTask = function (_Component) {
         _this.addSkill = _this.addSkill.bind(_this);
         _this.delete = _this.delete.bind(_this);
         _this.deleteSkill = _this.deleteSkill.bind(_this);
+
         return _this;
     }
 
     _createClass(TemplateTask, [{
+        key: "componentWillReceiveProps",
+        value: function componentWillReceiveProps(nextProps) {
+            // You don't have to do this check first, but it can help prevent an unneeded render
+            // if (nextProps.startTime !== this.state.startTime) {
+            //   this.setState({ startTime: nextProps.startTime });
+            // }
+
+            var allTasks = nextProps.allTasks.slice();
+            var predecessors = this.state.predecessors.slice();
+            allTasks.splice(nextProps.index, 1);
+            for (var j = 0; j < predecessors.length; j++) {
+                var found = false;
+                for (var i = 0; i < allTasks.length; i++) {
+
+                    // console.log(this.state.predecessors[j].id + " " + allTasks[i].id);
+                    if (predecessors[j].id == allTasks[i].id) {
+                        predecessors[j].name = allTasks[i].name;
+                        predecessors[j].duration = allTasks[i].duration;
+                        allTasks.splice(i, 1);
+                        found = true;
+                    }
+                }
+                if (!found) {
+                    predecessors.splice(j, 1);
+                }
+            }
+
+            this.setState({
+                allTasks: allTasks,
+                predecessors: predecessors
+            });
+        }
+    }, {
         key: "componentWillMount",
         value: function componentWillMount() {
             var allTasks = this.props.allTasks.slice();
@@ -59468,6 +59516,7 @@ var TemplateTask = function (_Component) {
             this.setState({
                 allTasks: allTasks
             });
+
             var newSkills = this.state.allSkills.slice();
 
             for (var j = 0; j < this.state.skills.length; j++) {
@@ -59487,6 +59536,7 @@ var TemplateTask = function (_Component) {
     }, {
         key: "edit",
         value: function edit() {
+
             this.setState({
                 edit: true
             });
@@ -59512,22 +59562,37 @@ var TemplateTask = function (_Component) {
     }, {
         key: "add",
         value: function add() {
-            var array = this.state.predecessors;
-            var Task = this.state.allTasks[this.refs.allTasksContainer.value];
-            array.push(Task);
-            var allTasks = this.state.allTasks.slice();
-            allTasks.splice(this.refs.allTasksContainer.value, 1);
-            this.setState({
-                predecessors: array,
-                allTasks: allTasks
-            });
+            if (this.refs.allTasksContainer.value != "") {
+                var array = this.state.predecessors;
+                var Task = this.state.allTasks[this.refs.allTasksContainer.value];
+                array.push(Task);
+                var allTasks = this.state.allTasks.slice();
+                allTasks.splice(this.refs.allTasksContainer.value, 1);
+                this.setState({
+                    predecessors: array,
+                    allTasks: allTasks
+                });
+            }
         }
     }, {
         key: "deletePredecessor",
         value: function deletePredecessor(index) {
-            var array = this.state.predecessors;
-            array.splice(index, 1);
-            this.setState({ predecessors: array });
+
+            var array = this.state.predecessors.slice();
+            var array2 = this.state.allTasks;
+            var obj = array.splice(index, 1);
+
+            for (var i = 0; i < this.props.allTasks.length; i++) {
+                if (this.props.allTasks[i].id == obj[0].id) {
+                    array2.push(this.props.allTasks[i]);
+                    break;
+                }
+            }
+
+            this.setState({
+                predecessors: array,
+                allTasks: array2
+            });
         }
     }, {
         key: "saveSkillLevel",
@@ -59617,26 +59682,7 @@ var TemplateTask = function (_Component) {
                             "div",
                             { className: "predecessors-box-insider d-flex flex-wrap justify-content-start" },
                             this.props.task.predecessors.map(function (predecessor, j) {
-                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    "div",
-                                    { className: "predecessor mx-3 my-2 px-2 py-1 ", key: j },
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        "div",
-                                        { className: "predecessor-name" },
-                                        predecessor.name
-                                    ),
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        "div",
-                                        { className: "predecessor-duration ml-4" },
-                                        predecessor.duration,
-                                        " ",
-                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                            "small",
-                                            null,
-                                            "Days"
-                                        )
-                                    )
-                                );
+                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__TaskProdecessor__["a" /* default */], { key: j, index: j, name: predecessor.name, onDelete: _this2.deletePredecessor, duration: predecessor.duration, edit: false });
                             })
                         )
                     )
@@ -59749,32 +59795,7 @@ var TemplateTask = function (_Component) {
                             "div",
                             { className: "predecessors-box-insider d-flex flex-wrap justify-content-start" },
                             this.state.predecessors.map(function (predecessor, i) {
-                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                    "div",
-                                    { key: i, className: "predecessor mx-3 my-2 px-2 py-1" },
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        "div",
-                                        { className: "predecessor-name" },
-                                        predecessor.name
-                                    ),
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        "div",
-                                        { className: "predecessor-duration ml-4" },
-                                        predecessor.duration,
-                                        " ",
-                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                            "small",
-                                            null,
-                                            "Days"
-                                        )
-                                    ),
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                        "div",
-                                        { className: "delete-btn ml-3", onClick: _this3.deletePredecessor.bind(i) },
-                                        " ",
-                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("img", { src: "/images/icons/cancel.png", alt: "delete" })
-                                    )
-                                );
+                                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__TaskProdecessor__["a" /* default */], { key: i, index: i, name: predecessor.name, onDelete: _this3.deletePredecessor, duration: predecessor.duration, edit: true });
                             })
                         )
                     )
@@ -59858,6 +59879,7 @@ var TemplateTask = function (_Component) {
     }, {
         key: "render",
         value: function render() {
+
             if (this.state.edit) {
                 return this.renderForm();
             } else {
@@ -63550,6 +63572,112 @@ var ProjectItem = function (_Component) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 81 */,
+/* 82 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+var TaskPredecessor = function (_Component) {
+    _inherits(TaskPredecessor, _Component);
+
+    function TaskPredecessor(props) {
+        _classCallCheck(this, TaskPredecessor);
+
+        var _this = _possibleConstructorReturn(this, (TaskPredecessor.__proto__ || Object.getPrototypeOf(TaskPredecessor)).call(this, props));
+
+        _this.state = {};
+        _this.delete = _this.delete.bind(_this);
+        return _this;
+    }
+
+    _createClass(TaskPredecessor, [{
+        key: "delete",
+        value: function _delete() {
+            this.props.onDelete(this.props.index);
+        }
+    }, {
+        key: "renderEdit",
+        value: function renderEdit() {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "div",
+                { className: "predecessor mx-3 my-2 px-2 py-1" },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "predecessor-name" },
+                    this.props.name
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "predecessor-duration ml-4" },
+                    this.props.duration,
+                    " ",
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "small",
+                        null,
+                        "Days"
+                    )
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "delete-btn ml-3", onClick: this.delete },
+                    " ",
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("img", { src: "/images/icons/cancel.png", alt: "delete" })
+                )
+            );
+        }
+    }, {
+        key: "renderNormal",
+        value: function renderNormal() {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "div",
+                { className: "predecessor mx-3 my-2 px-2 py-1 " },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "predecessor-name" },
+                    this.props.name
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "predecessor-duration ml-4" },
+                    this.props.duration,
+                    " ",
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "small",
+                        null,
+                        "Days"
+                    )
+                )
+            );
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            if (this.props.edit) {
+                return this.renderEdit();
+            } else {
+                return this.renderNormal();
+            }
+        }
+    }]);
+
+    return TaskPredecessor;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (TaskPredecessor);
 
 /***/ })
 /******/ ]);

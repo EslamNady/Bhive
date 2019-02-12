@@ -111,6 +111,19 @@ class EditTemplate extends Component {
     }
     deleteTask(index) {
         var array = this.state.tasks.slice();
+
+        for (var i = 0; i < array.length; i++) { //delete it from preddecessor
+            if (i == index)
+                continue
+            else {
+                for (var j = 0; j < array[i].predecessors.length; j++) {
+                    if (array[index].id == array[i].predecessors[j].id) {
+                        array[i].predecessors.splice(j, 1);
+                    }
+                }
+            }
+        }
+
         array.splice(index, 1);
         this.setState({ tasks: array });
     }
@@ -149,7 +162,7 @@ class EditTemplate extends Component {
                     </ul>
                 </div>
                 <div className="btn-group btn-wrapper" role="group">
-                    <button className="btn " onClick={this.add}>ADD</button>
+                    <button className="btn " onClick={this.add}>ADD Task</button>
                     <button className="btn " onClick={this.addNewTemplate}>Add new Template</button>
                     <button className="btn " data-toggle="modal" data-target="#created" onClick={this.onFinish}>Create New Project</button>
                 </div>
