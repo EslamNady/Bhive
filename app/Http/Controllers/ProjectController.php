@@ -104,6 +104,14 @@ class ProjectController extends Controller
                     $task->predecessor()->attach($predecessors[$i]);
             }
 
+            foreach($value['skills'] as $key2 => $skill){
+                $skil=Skill::find($skill['id']);
+                $ID=$skil->tasks()->attach($task->id);
+                \DB::table('skills_tasks_relations')->where('skill_id', $skil->id)->where('task_id', $task->id)->update(array('skill_level' => $skill['level']));
+
+            }
+        
+
         }
         //calculations
         $tasks=Task::where('project_id',$project_id)->get();
@@ -162,19 +170,13 @@ class ProjectController extends Controller
             }
             $task->slack=$slack;
             $task->save();
+            
         }
         // adding skills to tasks
 
-
-        foreach($data['tasks'] as $task1)
-        {
-            foreach($task1['skills'] as $key2 => $skill){
-                $skil=Skill::find($skill['id']);
-                $ID=$skil->tasks()->attach($task->id);
-                \DB::table('skills_tasks_relations')->where('skill_id', $skil->id)->where('task_id', $task->id)->update(array('skill_level' => $skill['level']));
-
-            }
-        }
+        
+            
+        
         // //geting all employees
         // $employees=Employee::all();
 
@@ -185,6 +187,7 @@ class ProjectController extends Controller
             $firstEmp=true;
             $minDistance=0;
             $empID=null;
+            // var_dump($assignedTask->skills);
             //geting all employees
             $employees=Employee::all();
             foreach($employees as $employee){
@@ -204,9 +207,10 @@ class ProjectController extends Controller
                 if(!$busy){
                     $empSkills=$employee->skills;
                     $taskSkills=$assignedTask->skills;
+                    
                     $distance=0;
                     foreach($taskSkills as $taskSkill){
-                        $employeeSkillLevel=0;
+                        $employeeSkillLevel=1000;
                         foreach($empSkills as $empSkill){
                             if($taskSkill->skill_name==$empSkill->skill_name){
                                 $employeeSkillLevel=(int)\DB::table('employee_skills_relations')->where('skill_id', $empSkill->id)->where('employee_id', $employee->id)->first()->skill_level;
@@ -215,8 +219,11 @@ class ProjectController extends Controller
                         }
                         $taskSkillLevel=(int)\DB::table('skills_tasks_relations')->where('skill_id', $taskSkill->id)->where('task_id', $assignedTask->id)->first()->skill_level;
                         $distance+=pow(($employeeSkillLevel-$taskSkillLevel),2);
+                        var_dump("comulative ".$distance);
                     }
                     $distance=sqrt($distance);
+                    var_dump("final ".$distance);
+                    var_dump($employee->name);
                     if($firstEmp){
                         $minDistance=$distance;
                         $empID=$employee->id;

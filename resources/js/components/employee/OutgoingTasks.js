@@ -24,7 +24,7 @@ class OutgoingTasks extends Component {
         return (
             <div>
                 <div className="card-header">
-                    <h4>Outgoing Tasks</h4>
+                    <h4>Ongoing Tasks</h4>
                 </div>
                 <div className="card-body">
                     <div className="blue-bg">

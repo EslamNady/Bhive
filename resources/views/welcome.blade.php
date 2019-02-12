@@ -14,19 +14,17 @@
         .cont {
         position: relative;
         width: 100%;
+        height: 100vh;
+        background-image: url(./images/backgrounds/background.png);
+        background-size: cover; 
+        background-position: center center;
         }
 
-        .cont img {
-        width: 100%;
-        height: auto;
-        filter: grayscale(50%);
-        filter: opacity(80%);
-
-        }
+        
 
         .cont .btn {
         position: absolute;
-        top: 50%;
+        top: 40%;
         /* left: 50%; */
         transform: translateY(-50%);
         -ms-transform: translate(-50%, -50%);
@@ -53,8 +51,8 @@
         }
 
         .cont .btn:hover {
-            background-color: #f1f1f1; /* Green */
-            color: #666666;
+            background-color: #ffc415; /* Green */
+            color: white;
         }
 
         </style>
@@ -63,7 +61,6 @@
         {{-- <h2>Button on Image</h2> --}}
 
         <div class="cont">
-            <img src="{{ asset('images/img.jpg')}}" alt="Snow" style="width:100%">
             <a class="btn" href="{{ route('employees.login') }}">Sign In</a>
             <a class="btn" href="{{ route('employees.register') }}">Sign Up</a>
         </div>

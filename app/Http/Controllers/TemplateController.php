@@ -27,6 +27,7 @@ class TemplateController extends Controller
     }
 
     public function addNewTemplate(Request $request){
+        
         $newTemplate=new TemplateProject;
         $newTemplate->name=$request->get('name');
         $newTemplate->description= $request->get('description');
@@ -37,31 +38,53 @@ class TemplateController extends Controller
 
         $templateTask=new TemplateTask;
         foreach($data['tasks'] as $key => $value){
-            $templateTask=new TemplateTask;
-            $templateTask->name=$value['name'];
-            $templateTask->duration=$value['duration'];
-            $templateTask->template_project_id=$template_id;
-            $templateTask->temp_id=$value['id'];
-            $templateTask->save();
+            $currentTask=0;
+            $task=new TemplateTask;
+            $predecessors=[];
+            if(TemplateTask::where('temp_id',$value['id'])->where('template_project_id',$template_id)->count()>0){
+                $task=TemplateTask::where('temp_id',$value['id'])->where('template_project_id',$template_id)->first();
+                $currentTask=$task->id;
+            }
+            else{
+                $task->name=$value['name'];
+                $task->duration=$value['duration'];
+                $task->temp_id=$value['id'];
 
-            $pres=[];
+                $task->template_project_id=$template_id;
+                $task->save();
+                $currentTask=$task->id;
+            }
+
+
             foreach($value['predecessors'] as $key2 => $pre){
+                $preTaskID=0;
+                $preTask;
                 if(TemplateTask::where('temp_id',$pre['id'])->where('template_project_id',$template_id)->count()>0){
-                    $task=TemplateTask::where('temp_id',$pre['id'])->where('template_project_id',$template_id)->first();
-                    array_push($pres,$task->id);
+                    $preTask=TemplateTask::where('temp_id',$pre['id'])->where('template_project_id',$template_id)->first();
+                    $preTaskID=$preTask->id;
                 }
+                else{
+                    $preTask=new TemplateTask;
+                    $preTask->name=$pre['name'];
+                    $preTask->duration=$pre['duration'];
+                    $preTask->template_project_id=$template_id;
+                    $preTask->temp_id=$pre['id'];
+                    $preTask->save();
+                    $preTaskID=$preTask->id;
+                }
+                array_push($predecessors,$preTaskID);
             }
-            if(count($pres)>0){
-                for($i=0;$i<count($pres);$i++)
-                    $templateTask->predecessor()->attach($pres[$i]);
+            if(count($predecessors)>0){
+                for($i=0;$i<count($predecessors);$i++)
+                    $task->predecessor()->attach($predecessors[$i]);
             }
-            $templateTask->save();
+            $task->save();
 
             //task skills
             foreach($value['skills'] as $key2 => $skill){
                 $skil=Skill::find($skill['id']);
-                $ID=$skil->templateTasks()->attach($templateTask->id);
-                \DB::table('skills_temp_tasks_relations')->where('skill_id', $skil->id)->where('template_task_id', $templateTask->id)->update(array('skill_level' => $skill['level']));
+                $ID=$skil->templateTasks()->attach($task->id);
+                \DB::table('skills_temp_tasks_relations')->where('skill_id', $skil->id)->where('template_task_id', $task->id)->update(array('skill_level' => $skill['level']));
 
             }
 
