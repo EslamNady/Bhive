@@ -11811,19 +11811,19 @@ a.text-dark:focus {
 
 .tasksContainer .tasks-list .list-group-item .normal-body .edit-btn img,
 .tasksContainer .tasks-list .list-group-item .normal-body .delete-btn img {
-  width: 12px;
-}
-
-.tasksContainer .tasks-list .list-group-item .normal-body .edit-btn {
-  left: 15px;
-}
-
-.tasksContainer .tasks-list .list-group-item .normal-body .edit-btn img {
   width: 14px;
 }
 
-.tasksContainer .tasks-list .list-group-item .normal-body .delete-btn {
+.tasksContainer .tasks-list .list-group-item .normal-body .edit-btn {
   right: 15px;
+}
+
+.tasksContainer .tasks-list .list-group-item .normal-body .edit-btn img {
+  width: 16px;
+}
+
+.tasksContainer .tasks-list .list-group-item .normal-body .delete-btn {
+  left: 15px;
 }
 
 .tasksContainer .tasks-list .list-group-item .edit-body .form label {
@@ -11997,7 +11997,7 @@ a.text-dark:focus {
 .tasksContainer .tasks-list .list-group-item .edit-body .skills-wrapper .skills-box .predecessors-box-insider .skill .delete-btn img,
 .tasksContainer .tasks-list .list-group-item .edit-body .skills-wrapper .skills-box .skills-box-insider .predecessor .delete-btn img,
 .tasksContainer .tasks-list .list-group-item .edit-body .skills-wrapper .skills-box .skills-box-insider .skill .delete-btn img {
-  width: 9px;
+  width: 17px;
 }
 
 .tasksContainer .tasks-list .list-group-item .edit-body .save-btn {
@@ -12005,11 +12005,11 @@ a.text-dark:focus {
   top: 5px;
   cursor: pointer;
   padding: 5px;
-  left: 15px;
+  right: 15px;
 }
 
 .tasksContainer .tasks-list .list-group-item .edit-body .save-btn img {
-  width: 14px;
+  width: 18px;
 }
 
 .projectWrapper {
@@ -12025,6 +12025,34 @@ a.text-dark:focus {
   margin-bottom: 30px;
   font-size: 25px;
   font-weight: 600;
+}
+
+.projectWrapper .blue-bg {
+  background-color: #10171F;
+  height: 75vh;
+  overflow-y: auto;
+  border-radius: 3px;
+  -webkit-box-shadow: 0px 0px 29px -6px rgba(0, 0, 0, 0.75);
+          box-shadow: 0px 0px 29px -6px rgba(0, 0, 0, 0.75);
+}
+
+.projectWrapper .blue-bg .doted-bg {
+  background-image: url(/images/backgrounds/dots.png);
+  background-position: center center;
+  background-size: cover;
+  height: 100%;
+  padding: 2%;
+}
+
+.projectWrapper .blue-bg .doted-bg .taskName {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.projectWrapper .blue-bg .doted-bg .crm {
+  border-radius: 5px;
+  overflow: hidden;
 }
 
 .employee-wrapper {
@@ -12092,7 +12120,7 @@ a.text-dark:focus {
 }
 
 .employee-wrapper .skills-wrapper .skills-box .skills-box-insider .skill .delete-btn img {
-  width: 9px;
+  width: 9px !important;
 }
 
 .tasks-wrapper {

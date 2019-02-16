@@ -9,7 +9,7 @@
     <title>Document</title>
 </head>
 <body>
-    <div id="ProjectView" projectID="{{ $project->id }}" projectName="{{$project->name}}">
+    <div id="ProjectView" projectID="{{ $project->id }}" projectName="{{$project->name}}" projectDescription="{{$project->description}}">
     </div>
     <script src="../js/app.js"></script>
 

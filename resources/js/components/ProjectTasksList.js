@@ -7,13 +7,17 @@ class ProjectTasksList extends Component {
     }
     render() {
         return (
-            <ul className="list-group">
-                {this.props.tasks.map((Task, i) => (
-                    <li key={i} className="list-group-item mx-0">
-                        <TaskInfoCard task={Task} />
-                    </li>
-                ))}
-            </ul>
+            <div className="blue-bg">
+                <div className="doted-bg">
+                    <ul className="list-group px-1">
+                        {this.props.tasks.map((Task, i) => (
+                            <li key={i} className="list-group-item mx-0 my-1">
+                                <TaskInfoCard task={Task} />
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
         );
     }
 }

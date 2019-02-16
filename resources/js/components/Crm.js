@@ -72,16 +72,20 @@ class CrmDiagram extends Component {
     render() {
 
         return <div>
+            <div className="blue-bg">
+                <div className="doted-bg">
+                    <div className="crm">
+                        <Chart
+                            chartType="Gantt"
+                            rows={this.state.rows}
+                            columns={this.state.columns}
+                            width="100%"
+                            height="400px"
 
-            <Chart
-                chartType="Gantt"
-                rows={this.state.rows}
-                columns={this.state.columns}
-                width="100%"
-                height="400px"
-
-            />
-
+                        />
+                    </div>
+                </div>
+            </div>
 
 
         </div>

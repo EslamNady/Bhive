@@ -59873,6 +59873,11 @@ var TemplateTask = function (_Component) {
                     "div",
                     { className: "save-btn", onClick: this.save },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("img", { src: "/images/icons/save.png", alt: "save" })
+                ),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "button",
+                    { className: "btn btn-success mt-2 ml-2", onClick: this.save },
+                    "Save"
                 )
             );
         }
@@ -60327,22 +60332,62 @@ var LogReader = function (_Component) {
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 "div",
-                { className: "ml-2 log-wrapper" },
+                null,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "label",
-                    null,
-                    "Upload a log ",
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { id: "logButton", className: " mr-3 py-1 px-1", type: "file", onChange: function onChange(f) {
-                            return _this3.readLog(f);
-                        }
-                    })
+                    "div",
+                    { className: "ml-2 log-wrapper" },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "label",
+                        null,
+                        "Upload a log ",
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { id: "logButton", className: " mr-3 py-1 px-1", type: "file", onChange: function onChange(f) {
+                                return _this3.readLog(f);
+                            }
+                        })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "button",
+                        { className: "select-btn py-1", onClick: this.submit },
+                        "Submit"
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "button",
+                        { className: "select-btn py-1 ml-2", "data-toggle": "modal", "data-target": "#log-example" },
+                        "log example"
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("p", { id: "show" })
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "button",
-                    { className: "select-btn py-1", onClick: this.submit },
-                    "Submit"
-                ),
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("p", { id: "show" })
+                    "div",
+                    { className: "modal fade", id: "log-example", tabIndex: "-1", role: "dialog", "aria-labelledby": "exampleModalCenterTitle", "aria-hidden": "true" },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "modal-dialog modal-dialog-centered", role: "document" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "modal-content" },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "div",
+                                { className: "modal-body log-example" },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    "div",
+                                    null,
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        "small",
+                                        { className: "text-danger" },
+                                        "*log example* ",
+                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                            "span",
+                                            { className: "text-muted" },
+                                            "(file.txt comma seprated fields)"
+                                        )
+                                    )
+                                ),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("img", { src: "/images/log 2.png", style: { width: 100 + "%" } })
+                            )
+                        )
+                    )
+                )
             );
         }
     }]);
@@ -60388,6 +60433,8 @@ var ProjectView = function (_Component) {
         _this.state = {
             project_id: document.getElementById("ProjectView").getAttribute("projectID"),
             project_name: document.getElementById("ProjectView").getAttribute("projectName"),
+            project_description: document.getElementById("ProjectView").getAttribute("projectDescription"),
+
             tasks: []
         };
         return _this;
@@ -60419,20 +60466,34 @@ var ProjectView = function (_Component) {
                 { className: "projectWrapper" },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
-                    { className: "project-name" },
-                    this.state.project_name
+                    { className: "project-info mb-3" },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "project-name" },
+                        this.state.project_name
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "project-description ml-4 h5" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "span",
+                            { className: "font-weight-bold " },
+                            " Project Description: \xA0\xA0"
+                        ),
+                        this.state.project_description
+                    )
                 ),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
-                    { className: "row px-0 mx-0" },
+                    { className: "row px-0 mx-0 mt-2" },
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "div",
-                        { className: "col-2" },
+                        { className: "col-2 px-1 mx-0 " },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__ProjectTasksList__["a" /* default */], { tasks: this.state.tasks })
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         "div",
-                        { className: "col-10" },
+                        { className: "col-10 px-1" },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__Crm__["a" /* default */], { project: this.state.project_id, projectTasks: this.state.tasks })
                     )
                 )
@@ -60543,14 +60604,26 @@ var CrmDiagram = function (_Component) {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
                 null,
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_google_charts__["a" /* Chart */], {
-                    chartType: 'Gantt',
-                    rows: this.state.rows,
-                    columns: this.state.columns,
-                    width: '100%',
-                    height: '400px'
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'blue-bg' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'doted-bg' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: 'crm' },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_google_charts__["a" /* Chart */], {
+                                chartType: 'Gantt',
+                                rows: this.state.rows,
+                                columns: this.state.columns,
+                                width: '100%',
+                                height: '400px'
 
-                })
+                            })
+                        )
+                    )
+                )
             );
         }
     }]);
@@ -62098,15 +62171,23 @@ var ProjectTasksList = function (_Component) {
         key: "render",
         value: function render() {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                "ul",
-                { className: "list-group" },
-                this.props.tasks.map(function (Task, i) {
-                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "li",
-                        { key: i, className: "list-group-item mx-0" },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__TaskInfoCard__["a" /* default */], { task: Task })
-                    );
-                })
+                "div",
+                { className: "blue-bg" },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "doted-bg" },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "ul",
+                        { className: "list-group px-1" },
+                        this.props.tasks.map(function (Task, i) {
+                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "li",
+                                { key: i, className: "list-group-item mx-0 my-1" },
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__TaskInfoCard__["a" /* default */], { task: Task })
+                            );
+                        })
+                    )
+                )
             );
         }
     }]);
@@ -62173,14 +62254,14 @@ var TaskInfoCard = function (_Component) {
                     null,
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
-                        { className: 'h3' },
+                        { className: 'h5 taskName' },
                         this.props.task.name
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         null,
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'label',
+                            'small',
                             { className: 'text-muted' },
                             'Slack:'
                         ),
@@ -62203,14 +62284,14 @@ var TaskInfoCard = function (_Component) {
                     null,
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
-                        { className: 'h3' },
+                        { className: 'h5 taskName' },
                         this.props.task.name
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
                         null,
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'label',
+                            'small',
                             { className: 'text-muted' },
                             'Slack:'
                         ),
@@ -62221,7 +62302,7 @@ var TaskInfoCard = function (_Component) {
                         'div',
                         null,
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'label',
+                            'small',
                             { className: 'text-muted' },
                             this.state.employee.title
                         ),

@@ -28,8 +28,8 @@ class TaskInfoCard extends Component {
         if (this.state.employee === null) {
             return (
                 <div>
-                    <div className="h3">{this.props.task.name}</div>
-                    <div><label className="text-muted">Slack:</label> {this.props.task.slack}</div>
+                    <div className="h5 taskName">{this.props.task.name}</div>
+                    <div><small className="text-muted">Slack:</small> {this.props.task.slack}</div>
                     <div><small className="text-muted">no employee is assigned</small></div>
                 </div>
             );
@@ -37,9 +37,9 @@ class TaskInfoCard extends Component {
         else {
             return (
                 <div>
-                    <div className="h3">{this.props.task.name}</div>
-                    <div><label className="text-muted">Slack:</label> {this.props.task.slack}</div>
-                    <div><label className="text-muted">{this.state.employee.title}</label> /<span className="font-weight-bold"> {this.state.employee.name}</span></div>
+                    <div className="h5 taskName">{this.props.task.name}</div>
+                    <div><small className="text-muted">Slack:</small> {this.props.task.slack}</div>
+                    <div><small className="text-muted">{this.state.employee.title}</small> /<span className="font-weight-bold"> {this.state.employee.name}</span></div>
                 </div>
             );
         }

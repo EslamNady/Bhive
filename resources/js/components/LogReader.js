@@ -184,14 +184,30 @@ class LogReader extends Component {
     }
     render() {
         return (
-            <div className="ml-2 log-wrapper">
-                <label>
-                    {"Upload a log "}
-                    <input id="logButton" className=" mr-3 py-1 px-1" type="file" onChange={f => this.readLog(f)}
-                    />
-                </label>
-                <button className="select-btn py-1" onClick={this.submit}>Submit</button>
-                <p id="show" />
+            <div>
+                <div className="ml-2 log-wrapper">
+                    <label>
+                        {"Upload a log "}
+                        <input id="logButton" className=" mr-3 py-1 px-1" type="file" onChange={f => this.readLog(f)}
+                        />
+                    </label>
+                    <button className="select-btn py-1" onClick={this.submit}>Submit</button>
+                    <button className="select-btn py-1 ml-2" data-toggle="modal" data-target="#log-example">log example</button>
+                    <p id="show" />
+                </div>
+
+                <div className="modal fade" id="log-example" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered" role="document">
+                        <div className="modal-content">
+
+                            <div className="modal-body log-example">
+                                <div><small className="text-danger">*log example* <span className="text-muted">(file.txt comma seprated fields)</span></small></div>
+                                <img src="/images/log 2.png" style={{ width: 100 + "%" }} />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }

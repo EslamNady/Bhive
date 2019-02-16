@@ -272,6 +272,7 @@ class TemplateTask extends Component {
                 </div>
 
                 <div className="save-btn" onClick={this.save}><img src="/images/icons/save.png" alt="save" /></div>
+                <button className="btn btn-success mt-2 ml-2" onClick={this.save}>Save</button>
 
             </div>
         );
