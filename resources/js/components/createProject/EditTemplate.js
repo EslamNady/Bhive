@@ -26,7 +26,7 @@ class EditTemplate extends Component {
                 allskills: response.data.data
             });
 
-            this.setState({ allskills: newSkills });
+
         });
     }
 
@@ -61,7 +61,8 @@ class EditTemplate extends Component {
             name: "Task ",
             duration: 0,
             predecessors: [],
-            skills: []
+            skills: [],
+            empNum: 1
         };
         array.push(Task);
         array.slice();
@@ -73,7 +74,7 @@ class EditTemplate extends Component {
         if (this.state.tasks) {
             axios({
                 method: "post",
-                url: "../template/submit",
+                url: "../project/submit",
                 data: {
                     name: this.refs.projectName.value,
                     description: this.refs.description.value,

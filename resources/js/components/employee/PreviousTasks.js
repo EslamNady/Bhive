@@ -28,7 +28,7 @@ class PreviousTasks extends Component {
                 <div className="card-body">
                     <div className="blue-bg">
                         <div className="doted-bg px-3 py-3">
-                            <ul className="list-group task-wrapper">
+                            <ul className="list-group ">
                                 {this.state.previousTasks.map((task, i) => (
                                     <li className="list-group-item task-wrapper" key={i}>
                                         <div className="project-name">

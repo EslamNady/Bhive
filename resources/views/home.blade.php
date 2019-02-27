@@ -5,6 +5,11 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet"> 
 </head>
 <div >
+        @if(session()->has('message'))
+        <div class="alert alert-success">
+             {{ session()->get('message') }}
+        </div>
+    @endif
     <div>
         <div name={{ $manager->name }} managerID={{ Auth::id() }} id="ManagerProfile"></div>
         <div id="ProjectListView"></div>

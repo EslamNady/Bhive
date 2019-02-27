@@ -20,14 +20,15 @@ Route::get('/test',function(){
 });
 Route::get('templates','TemplateController@getAllTemplates');
 Route::get('template/tasks{id}','TemplateController@sendTemplateTasks');
-Route::post('template/submit','ProjectController@createNewProject');
+Route::post('project/submit','ProjectController@createNewProject');
 Route::post('template/addNew','TemplateController@addNewTemplate');
 Route::get('project/list','ProjectController@list')->name('project.list');
 Route::get('project/ProjectListView','ProjectController@ProjectListView')->name('project.ProjectListView');
 Route::get('project/tasks{id}','ProjectController@sendprojectTasks');
 Route::get('project/view{id}','ProjectController@ProjectView');
-Route::resource('project','ProjectController');
+Route::get('project/submittedtasks{id}','ProjectController@getSubmittedTasks');
 
+Route::resource('project','ProjectController');
 
 
 Auth::routes();
@@ -43,6 +44,18 @@ Route::prefix('employees')->group(function(){
     Route::get('/register','Auth\EmployeesLoginController@showRegisterForm')->name("employees.register");
     Route::post('/register','Auth\EmployeesLoginController@register')->name("employees.register.submit");
 
+});
+Route::prefix('employees')->group(function(){
+    //employees upcoming tasks
+    Route::get('/upcomingtasks{employeeID}','EmployeesController@getUpcomingTasks');
+    //employees previous tasks
+    Route::get('/previoustasks{employeeID}','EmployeesController@getPrevTasks');
+    //employees outgoing tasks
+    Route::get('/outgoingtasks{employeeID}','EmployeesController@getOngoingTasks');
+    //task submission view
+    Route::get('/submit/view{taskID}','EmployeesController@taskSubmitView');
+    Route::post('/submit','EmployeesController@taskSubmit');
+    
 });
 
 //get assigned task employee
@@ -63,9 +76,4 @@ Route::prefix('skills')->group(function(){
 
 });
 
-//employees upcoming tasks
-Route::get('/employees/upcomingtasks{employeeID}','EmployeesController@getUpcomingTasks');
-//employees previous tasks
-Route::get('/employees/previoustasks{employeeID}','EmployeesController@getPrevTasks');
-//employees outgoing tasks
-Route::get('/employees/outgoingtasks{employeeID}','EmployeesController@getOutgoingTasks');
+

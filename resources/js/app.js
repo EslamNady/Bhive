@@ -13,9 +13,10 @@ require("./bootstrap");
  */
 
 require("./components/index");
-require("./components/CreateProject");
-require("./components/ProjectView");
+require("./components/createProject/CreateProject");
+require("./components/viewProject/ProjectView");
 require("./components/employee/Main");
 require("./components/manager/Main");
+require("./components/SubmitTask/SubmitTaskMain");
 
 

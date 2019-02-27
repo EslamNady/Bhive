@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Task extends Model
 {
     protected $fillable = [
-        'id','name', 'duration','slack', 'endDate', 'startDate','temp_id','project_id',
+        'id','name', 'duration','slack', 'endDate', 'startDate','temp_id','project_id','resources_number',
     ];
     protected $dates=['startDate','endDate'];
     public function Project()
@@ -24,7 +24,7 @@ class Task extends Model
     }
     public function employees()
     {
-        return $this->belongsToMany('App\Employee','activity_timeline');
+        return $this->belongsToMany('App\Employee','activity_timeline')->withPivot(['submitted','submission-link','note','time_score','feedback_score']);
     }
     public function skills()
     {

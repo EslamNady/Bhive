@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from "react-dom";
 import CrmDiagram from "./Crm";
 import ProjectTasksList from "./ProjectTasksList";
+import SubmittedTasksList from "./SubmittedTasksList";
 class ProjectView extends Component {
     constructor(props) {
         super(props);
@@ -33,7 +34,7 @@ class ProjectView extends Component {
         }
 
         return (
-            <div className="projectWrapper">
+            <div className="projectWrapper ">
                 <div className="project-info mb-3">
                     <div className="project-name">{this.state.project_name}</div>
                     <div className="project-description ml-4 h5"><span className="font-weight-bold "> Project Description: &nbsp;&nbsp;</span>{this.state.project_description}</div>
@@ -46,6 +47,9 @@ class ProjectView extends Component {
                     <div className="col-10 px-1">
 
                         <CrmDiagram project={this.state.project_id} projectTasks={this.state.tasks}></CrmDiagram>
+                    </div>
+                    <div className="col-12 px-1">
+                        <SubmittedTasksList project_id={this.state.project_id}></SubmittedTasksList>
                     </div>
                 </div>
 

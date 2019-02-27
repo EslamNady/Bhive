@@ -10,7 +10,9 @@ class TemplateTask extends Component {
             skills: this.props.task.skills,
             edit: false,
             allSkills: this.props.allSkills,
-            allTasks: []
+            allTasks: [],
+            emps_number: 0
+
         };
         this.edit = this.edit.bind(this);
         this.save = this.save.bind(this);
@@ -20,6 +22,9 @@ class TemplateTask extends Component {
         this.addSkill = this.addSkill.bind(this);
         this.delete = this.delete.bind(this);
         this.deleteSkill = this.deleteSkill.bind(this);
+        this.setEmpsNumber = this.setEmpsNumber.bind(this);
+
+
 
 
 
@@ -61,7 +66,8 @@ class TemplateTask extends Component {
         var allTasks = this.props.allTasks.slice();
         allTasks.splice(this.props.index, 1);
         this.setState({
-            allTasks: allTasks
+            allTasks: allTasks,
+            emps_number: this.props.task.empNum,
         });
 
         var newSkills = this.state.allSkills.slice();
@@ -101,7 +107,8 @@ class TemplateTask extends Component {
             name: this.refs.name.value,
             duration: parseInt(this.refs.duration.value),
             predecessors: predecessors,
-            skills: this.state.skills
+            skills: this.state.skills,
+            empNum: this.state.emps_number
         };
         this.props.onSave(this.props.index, task);
     }
@@ -165,6 +172,13 @@ class TemplateTask extends Component {
         array.splice(index, 1);
         this.setState({ skills: array });
     }
+    setEmpsNumber() {
+
+        this.setState({
+            emps_number: this.refs.emps_number.value
+        })
+
+    }
     renderNormal() {
         return (
             <div className="task-body normal-body">
@@ -184,8 +198,11 @@ class TemplateTask extends Component {
                         </div>
                     </div>
                 </div>
+
                 <div className="skills-wrapper">
-                    <h4>Required skills</h4>
+
+                    <h4 className="mt-2 d-inline-block">Required skills </h4>
+                    <small className=" text-muted"> No. of employees: {this.state.emps_number}</small>
                     <div className="skills-box " >
                         <div className="skills-box-insider d-flex flex-wrap justify-content-start">
                             {this.state.skills.map((skill, i) => (
@@ -240,7 +257,15 @@ class TemplateTask extends Component {
                 </div>
                 <div className="skills-wrapper">
 
-                    <h4>Required skills</h4>
+                    <h4>Number of employees</h4>
+                    <select defaultValue={this.state.emps_number} onChange={this.setEmpsNumber} className="form-control emp-number-select" ref="emps_number">
+                        <option value={1}>1</option>
+                        <option value={2}>2</option>
+                        <option value={3}>3</option>
+                    </select>
+
+
+                    <h4 className="mt-2">Required skills</h4>
 
                     <div className="form-group form-inline">
                         <select className="form-control" id="allSkillsSelect" ref="allSkillsSelect">

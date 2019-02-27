@@ -2,15 +2,17 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import SystemSkills from "./SystemSkills";
 import ProjectListView from './ProjectListView';
+// import SubmittedTasks from './SubmittedTasks';
 class ManagerProfile extends Component {
     constructor(props) {
         super(props);
         this.state = {
             id: parseInt(document.getElementById("ManagerProfile").getAttribute("managerID")),
             name: document.getElementById("ManagerProfile").getAttribute("name"),
-            systemSkills: []
+            systemSkills: [],
         };
     }
+
 
     render() {
         return (
@@ -32,6 +34,11 @@ class ManagerProfile extends Component {
                                     <ProjectListView></ProjectListView>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div>
+                            {/* <submittedTasks></submittedTasks> */}
                         </div>
                     </div>
                 </div>

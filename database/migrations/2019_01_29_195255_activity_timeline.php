@@ -24,6 +24,13 @@ class ActivityTimeline extends Migration
             $table->foreign('task_id')->references('id')
             ->on('tasks')->onDelete('cascade')->onUpdate('cascade');
 
+            $table->boolean('submitted')->default(false);
+            $table->string("submission-link")->nullable();
+            $table->string("note")->nullable();
+
+            $table->decimal("time_score")->default(0);
+            $table->decimal("feedback_score")->default(0);
+            
             $table->timestamps();
         });
     }

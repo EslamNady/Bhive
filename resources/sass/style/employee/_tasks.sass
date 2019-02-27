@@ -9,7 +9,7 @@
         padding: 0 !important
     .blue-bg
         background-color: #10171F
-        color: white
+        color: white 
         .doted-bg
             background-image: url(/images/backgrounds/dots.png)
             background-position: center center
@@ -22,9 +22,9 @@
                 border-radius: 5px
                 box-shadow: -1px 2px 12px 0px rgba(0,0,0,0.75)
                 transition: all 200ms
-                &:hover
-                    background-color: rgba(black,0.5) !important
-                    box-shadow: 4px 2px 27px 1px rgba(0,0,0,0.75)
+                color: white
+                cursor: context-menu
+                
                 .project-name
                     font-size: 19px
                     font-weight: 600
@@ -33,3 +33,11 @@
                     font-size: 20px
                     font-weight: 500
                     margin-bottom: 7px
+            .task-wrapper-link
+                cursor: pointer
+                &:hover
+                    background-color: rgba(black,0.5) !important
+                    box-shadow: 4px 2px 27px 1px rgba(0,0,0,0.75)
+                &:active
+                    background-color: rgba(black,0.7) !important
+                    box-shadow: 4px 2px 24px 1px rgba(0,0,0,0.75)

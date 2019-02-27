@@ -6,6 +6,7 @@ use App\Http\Resources\TemplateTaskResource;
 use App\Http\Resources\ProjectsResource;
 use App\Http\Resources\TasksResource;
 use App\Http\Resources\EmployeeResource;
+use App\Http\Resources\SubmittedTasksResource;
 use Illuminate\Http\Request;
 use App\TemplateTask;
 use App\TemplateProject;
@@ -62,7 +63,8 @@ class ProjectController extends Controller
         $newproject->save();
         $project_id=$newproject->id;
         foreach($data['tasks'] as $key => $value){
-
+            $empNum=$value['empNum'];
+            
             $currentTask=0;
             $task=new Task;
             $predecessors=[];
@@ -76,6 +78,7 @@ class ProjectController extends Controller
                 $task->temp_id=$value['id'];
 
                 $task->project_id=$project_id;
+                $task->resources_number=$empNum;
                 $task->save();
                 $currentTask=$task->id;
             }
@@ -93,6 +96,7 @@ class ProjectController extends Controller
                     $preTask->name=$pre['name'];
                     $preTask->duration=$pre['duration'];
                     $preTask->project_id=$project_id;
+                    $preTask->resources_number=$empNum;
                     $preTask->temp_id=$pre['id'];
                     $preTask->save();
                     $preTaskID=$preTask->id;
@@ -183,12 +187,17 @@ class ProjectController extends Controller
         $assignedTasks=Task::where('project_id',$project_id)->get();
         foreach($assignedTasks as $assignedTask){
 
-            $i=1;
-            $firstEmp=true;
-            $minDistance=0;
-            $empID=null;
+            
             // var_dump($assignedTask->skills);
             //geting all employees
+            // $empArray=[];
+            
+            for($e=1;$e<=$assignedTask->resources_number;$e++){
+                $i=1;
+                $firstEmp=true;
+                $minDistance=0;
+                $empID=null;
+            
             $employees=Employee::all();
             foreach($employees as $employee){
                 $activities=$employee->tasks;
@@ -204,6 +213,7 @@ class ProjectController extends Controller
                         break;
                     }
                 }
+                $found=false;
                 if(!$busy){
                     $empSkills=$employee->skills;
                     $taskSkills=$assignedTask->skills;
@@ -213,14 +223,17 @@ class ProjectController extends Controller
                         $employeeSkillLevel=1000;
                         foreach($empSkills as $empSkill){
                             if($taskSkill->skill_name==$empSkill->skill_name){
-                                $employeeSkillLevel=(int)\DB::table('employee_skills_relations')->where('skill_id', $empSkill->id)->where('employee_id', $employee->id)->first()->skill_level;
+                                $employeeSkillLevel=(float)\DB::table('employee_skills_relations')->where('skill_id', $empSkill->id)->where('employee_id', $employee->id)->first()->skill_level;
+                                $found=true;
                                 break;
                             }
                         }
+                        
                         $taskSkillLevel=(int)\DB::table('skills_tasks_relations')->where('skill_id', $taskSkill->id)->where('task_id', $assignedTask->id)->first()->skill_level;
                         $distance+=pow(($employeeSkillLevel-$taskSkillLevel),2);
                         var_dump("comulative ".$distance);
                     }
+                    var_dump($found);
                     $distance=sqrt($distance);
                     var_dump("final ".$distance);
                     var_dump($employee->name);
@@ -232,15 +245,22 @@ class ProjectController extends Controller
                         if($distance<$minDistance){
                             $minDistance=$distance;
                             $empID=$employee->id;
+                            
                         }
                     }
 
+                    
                 }
-                
+                // if(!$found){
+                //     var_dump("emp: ".$employee->name);
+                //     $empID=null;
+                // }
             }
             if($empID!==null)
                 $assignedTask->employees()->attach($empID);
-
+            
+            // array_push($empArray,$empID);    
+            }
 
         }
 
@@ -261,60 +281,22 @@ class ProjectController extends Controller
      */
 
     public function getEmployee($taskID){
-        $activity=\DB::table('activity_timeline')->where('task_id', $taskID)->first();
-        if($activity===null)
+        $task=Task::find($taskID);
+        $assignedEmployee=$task->employees;
+        if($assignedEmployee===null){
             return null;
-        $assignedEmployee=Employee::find($activity->employee_id);
-        return new EmployeeResource($assignedEmployee);
+        }
+        return EmployeeResource::collection($assignedEmployee);
     }
 
-    public function store(Request $request)
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+    
+    
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+    public function getSubmittedTasks($id){
+        $tasks=Task::where('project_id',$id)->get();
+       print_r($tasks.data);
+        $tasks->employees()->wherePivot('submitted',"=",true)->get();
+        return SubmittedTasksResource::collection($tasks);
     }
 }

@@ -21,6 +21,8 @@ class CreateTemplateTasksTable extends Migration
 
             $table->integer('template_project_id')->unsigned();
             $table->foreign('template_project_id')->references('id')->on('template_projects')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedInteger('resources_number')->default(1);
+
             $table->timestamps();
         });
     }

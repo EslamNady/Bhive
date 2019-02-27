@@ -12159,12 +12159,8 @@ a.text-dark:focus {
           box-shadow: -1px 2px 12px 0px rgba(0, 0, 0, 0.75);
   -webkit-transition: all 200ms;
   transition: all 200ms;
-}
-
-.tasks-wrapper .blue-bg .doted-bg .task-wrapper:hover {
-  background-color: rgba(0, 0, 0, 0.5) !important;
-  -webkit-box-shadow: 4px 2px 27px 1px rgba(0, 0, 0, 0.75);
-          box-shadow: 4px 2px 27px 1px rgba(0, 0, 0, 0.75);
+  color: white;
+  cursor: context-menu;
 }
 
 .tasks-wrapper .blue-bg .doted-bg .task-wrapper .project-name {
@@ -12177,6 +12173,27 @@ a.text-dark:focus {
   font-size: 20px;
   font-weight: 500;
   margin-bottom: 7px;
+}
+
+.tasks-wrapper .blue-bg .doted-bg .task-wrapper-link {
+  cursor: pointer;
+}
+
+.tasks-wrapper .blue-bg .doted-bg .task-wrapper-link:hover {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  -webkit-box-shadow: 4px 2px 27px 1px rgba(0, 0, 0, 0.75);
+          box-shadow: 4px 2px 27px 1px rgba(0, 0, 0, 0.75);
+}
+
+.tasks-wrapper .blue-bg .doted-bg .task-wrapper-link:active {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+  -webkit-box-shadow: 4px 2px 24px 1px rgba(0, 0, 0, 0.75);
+          box-shadow: 4px 2px 24px 1px rgba(0, 0, 0, 0.75);
+}
+
+.submit-wrapper {
+  min-height: 100vh;
+  background-image: url("/images/backgrounds/back.png");
 }
 
 .navbar-laravel {

@@ -31,7 +31,8 @@ class OutgoingTasks extends Component {
                         <div className="doted-bg px-3 py-3">
                             <ul className="list-group">
                                 {this.state.outgoingTasks.map((task, i) => (
-                                    <li className="list-group-item task-wrapper" key={i}>
+                                    <a href={"employees/submit/view" + task.id} className="list-group-item task-wrapper task-wrapper-link" key={i}>
+
                                         <div className="project-name">
                                             {task.project_name}
                                         </div>
@@ -46,7 +47,7 @@ class OutgoingTasks extends Component {
                                             <small className="text-muted">End Date: </small>
                                             {task.end_date}
                                         </div>
-                                    </li>
+                                    </a>
                                 ))}
                             </ul>
                         </div>

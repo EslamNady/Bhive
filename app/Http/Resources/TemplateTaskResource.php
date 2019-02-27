@@ -20,6 +20,7 @@ class TemplateTaskResource extends JsonResource
             'duration' =>$this->duration,
             'predecessors' =>TemplateTaskResource::collection($this->predecessor),
             'skills' => SkillsWithLevelResource::collection($this->skills),
+            'empNum' => $this->resources_number,
         ];
     }
 }

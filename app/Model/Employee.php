@@ -17,7 +17,7 @@ class Employee extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','title','score',
+        'name', 'email', 'password','title','score','submitted_tasks_num',
     ];
 
     /**
@@ -35,6 +35,6 @@ class Employee extends Authenticatable
     }
     public function tasks()
     {
-        return $this->belongsToMany('App\Task','activity_timeline');
+        return $this->belongsToMany('App\Task','activity_timeline')->withPivot(['submitted','submission-link','note','time_score','feedback_score']);
     }
 }
