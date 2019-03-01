@@ -49,7 +49,7 @@ class ProjectView extends Component {
                         <CrmDiagram project={this.state.project_id} projectTasks={this.state.tasks}></CrmDiagram>
                     </div>
                     <div className="col-12 px-1">
-                        <SubmittedTasksList project_id={this.state.project_id}></SubmittedTasksList>
+                        <SubmittedTasksList tasks={this.state.tasks} project_id={this.state.project_id}></SubmittedTasksList>
                     </div>
                 </div>
 

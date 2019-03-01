@@ -14,28 +14,41 @@ class SubmitTaskMain extends Component {
             task: JSON.parse(document.getElementById("submissionView").getAttribute("task")),
         })
     }
+    validURL(str) {
+        var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+            '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+            '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+            '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+            '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+            '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
+        return !!pattern.test(str);
+    }
+
     submit() {
         var link = this.refs.link.value;
-        var comment = this.refs.link.value;
-        axios({
-            method: "post",
-            url: "../../employees/submit",
-            data: {
-                link: link,
-                comment: comment,
-                task: this.state.task,
-            }
-        }).
-            then(response => {
-                window.location = "/employees";
-                // console.log(response.data);
+        var comment = this.refs.comment.value;
+        console.log(this.validURL(link));
+        if (!(link == "" && comment == "") && this.validURL(link)) {
+            axios({
+                method: "post",
+                url: "../../employees/submit",
+                data: {
+                    link: link,
+                    comment: comment,
+                    task: this.state.task,
+                }
+            }).
+                then(response => {
+                    window.location = "/employees";
+                    // console.log(response.data);
 
-            })
-            .catch(function (error) {
-                console.log(error.response.data);
-            });
-
+                })
+                .catch(function (error) {
+                    console.log(error.response.data);
+                });
+        }
     }
+
     render() {
         return (
             <div className="submit-wrapper">

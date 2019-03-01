@@ -11439,6 +11439,12 @@ a.text-dark:focus {
   }
 }
 
+.text-doted {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 .manager-main {
   background-image: url("/images/backgrounds/back.png");
   background-size: cover;
@@ -12053,6 +12059,20 @@ a.text-dark:focus {
 .projectWrapper .blue-bg .doted-bg .crm {
   border-radius: 5px;
   overflow: hidden;
+}
+
+.subTask .note-completed {
+  max-height: 150px;
+  overflow-y: auto;
+  font-size: 15px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.015);
+  white-space: normal;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .employee-wrapper {

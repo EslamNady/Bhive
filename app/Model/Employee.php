@@ -35,6 +35,6 @@ class Employee extends Authenticatable
     }
     public function tasks()
     {
-        return $this->belongsToMany('App\Task','activity_timeline')->withPivot(['submitted','submission-link','note','time_score','feedback_score']);
+        return $this->belongsToMany('App\Task','activity_timeline')->withPivot('id','gave_feedback','submitted','submission_date','submission_link','note','time_score','feedback_score');
     }
 }

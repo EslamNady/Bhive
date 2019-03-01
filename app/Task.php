@@ -24,7 +24,7 @@ class Task extends Model
     }
     public function employees()
     {
-        return $this->belongsToMany('App\Employee','activity_timeline')->withPivot(['submitted','submission-link','note','time_score','feedback_score']);
+        return $this->belongsToMany('App\Employee','activity_timeline')->withPivot('id','gave_feedback','submitted','submission_date','submission_link','note','time_score','feedback_score');
     }
     public function skills()
     {

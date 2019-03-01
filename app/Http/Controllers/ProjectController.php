@@ -282,6 +282,8 @@ class ProjectController extends Controller
 
     public function getEmployee($taskID){
         $task=Task::find($taskID);
+        // var_dump($task);
+
         $assignedEmployee=$task->employees;
         if($assignedEmployee===null){
             return null;
@@ -294,9 +296,8 @@ class ProjectController extends Controller
     
 
     public function getSubmittedTasks($id){
-        $tasks=Task::where('project_id',$id)->get();
-       print_r($tasks.data);
-        $tasks->employees()->wherePivot('submitted',"=",true)->get();
+        $tasks=Task::where('project_id',$id)->with('employees')->get();
+        
         return SubmittedTasksResource::collection($tasks);
     }
 }

@@ -147,7 +147,7 @@ class EmployeesController extends Controller
         $taskDB->progress+=100/(float)$employees_num;
         $taskDB->save();
 
-        \DB::table('activity_timeline')->where('task_id', $task['id'])->where('employee_id', Auth::id())->update(array('time_score'=>$subScore,'submission-link' => $link, 'note' => $comment, 'submitted'=> true));
+        \DB::table('activity_timeline')->where('task_id', $task['id'])->where('employee_id', Auth::id())->update(array('submission_date' => $today,'time_score'=>$subScore,'submission_link' => $link, 'note' => $comment, 'submitted'=> true));
         Session::flash('message', 'Task Submitted Success!');
         return new EmployeeResource($employee);
         

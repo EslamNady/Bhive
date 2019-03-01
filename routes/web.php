@@ -58,6 +58,9 @@ Route::prefix('employees')->group(function(){
     
 });
 
+//task feedback
+Route::post('/task/submit/feedback','TaskController@giveFeedback');
+
 //get assigned task employee
 Route::get('/tasks/employee{taskID}','ProjectController@getEmployee');
 

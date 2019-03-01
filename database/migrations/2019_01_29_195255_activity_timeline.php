@@ -25,12 +25,14 @@ class ActivityTimeline extends Migration
             ->on('tasks')->onDelete('cascade')->onUpdate('cascade');
 
             $table->boolean('submitted')->default(false);
-            $table->string("submission-link")->nullable();
-            $table->string("note")->nullable();
+            $table->text("submission_link")->nullable();
+            $table->text("note")->nullable();
+            $table->date('submission_date')->nullable();
 
             $table->decimal("time_score")->default(0);
             $table->decimal("feedback_score")->default(0);
-            
+            $table->boolean("gave_feedback")->default(false);
+
             $table->timestamps();
         });
     }

@@ -14,15 +14,12 @@ class SubmittedTasksResource extends JsonResource
      */
     public function toArray($request)
     {
+
+        
         return [
             'name' => $this->name,
-            'note' => $this->whenPivotLoaded('activity_timeline', function () {
-                return $this->pivot->note;
-            }),
-            'submission_link' => $this->whenPivotLoaded('activity_timeline', function () {
-                return $this->pivot->submission_link;
-            }),
-            // 'employee_name' => $this->employees
+            'submissions' =>  TaskDetailsResource::collection($this->employees),
+            
         ];
     }
 }
