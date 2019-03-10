@@ -13,11 +13,8 @@
 
 Route::get('/','indexController@showIndex');
 
-Route::get('/test',function(){
-    $pre=App\TemplateTask::find(1);
-    return $pre->predecessor;
 
-});
+
 Route::get('templates','TemplateController@getAllTemplates');
 Route::get('template/tasks{id}','TemplateController@sendTemplateTasks');
 Route::post('project/submit','ProjectController@createNewProject');
@@ -27,6 +24,7 @@ Route::get('project/ProjectListView','ProjectController@ProjectListView')->name(
 Route::get('project/tasks{id}','ProjectController@sendprojectTasks');
 Route::get('project/view{id}','ProjectController@ProjectView');
 Route::get('project/submittedtasks{id}','ProjectController@getSubmittedTasks');
+Route::get('attendance-QR','AttendanceController@viewQR');
 
 Route::resource('project','ProjectController');
 
@@ -43,8 +41,9 @@ Route::prefix('employees')->group(function(){
     Route::get('/','EmployeesController@index')->name("employees.dashboard");
     Route::get('/register','Auth\EmployeesLoginController@showRegisterForm')->name("employees.register");
     Route::post('/register','Auth\EmployeesLoginController@register')->name("employees.register.submit");
-
 });
+Route::get('/signupFirebase','FirebaseController@signupFirebase')->name('signupFirebase');
+
 Route::prefix('employees')->group(function(){
     //employees upcoming tasks
     Route::get('/upcomingtasks{employeeID}','EmployeesController@getUpcomingTasks');
@@ -80,3 +79,4 @@ Route::prefix('skills')->group(function(){
 });
 
 
+Route::get('/getCurrentTime','AttendanceController@getCurrentTime');

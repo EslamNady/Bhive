@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import SystemSkills from "./SystemSkills";
 import ProjectListView from './ProjectListView';
+
 // import SubmittedTasks from './SubmittedTasks';
 class ManagerProfile extends Component {
     constructor(props) {
@@ -26,8 +27,12 @@ class ManagerProfile extends Component {
                             <div>
                                 <SystemSkills />
                             </div>
+
                         </div>
                         <div className="col-6">
+                            <div className="mb-3 text-right">
+                                <a className="btn btn-primary  " href="/attendance-QR">Create a new project</a>
+                            </div>
                             <div className="projectList-wrapper">
                                 <div className="bg-wrapper">
                                     <h4 className="title text-center text-white mb-3">All Projects</h4>
@@ -36,11 +41,7 @@ class ManagerProfile extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="row">
-                        <div>
-                            {/* <submittedTasks></submittedTasks> */}
-                        </div>
-                    </div>
+
                 </div>
 
             </div>

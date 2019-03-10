@@ -26,7 +26,7 @@ class Employee extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+         'remember_token',
     ];
 
     public function skills()

@@ -13,7 +13,8 @@ class LogReader extends Component {
                 name: "",
                 duration: "",
                 predecessors: [],
-                skills: []
+                skills: [],
+                empNum: 1
             }
         };
         this.submit = this.submit.bind(this);

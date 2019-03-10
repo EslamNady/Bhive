@@ -49,8 +49,16 @@ class EmployeesLoginController extends Controller
         $employee->title=$request->title;
         $employee->password= Hash::make($request->password);
         $employee->email=$request->email;
-        $employee->save();
-        return redirect()->route('employees.login')->withInput(['email'=>$request->email]);
+        // $employee->save();
+        $emp=new Employee;
+        $emp->name=$request->name;
+        $emp->email=$request->email;
+        $emp->password=$request->password;
+        $emp->title=$request->title;
+        $emp=json_encode($emp);
+        return redirect()->route('signupFirebase')->with('employee' , $emp);
+        
     }
+
 
 }

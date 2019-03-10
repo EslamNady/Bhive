@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "babel": "^6.23.0",
+        "qrcode.react": "^0.9.3",
         "react-google-charts": "^3.0.8"
     }
 }
