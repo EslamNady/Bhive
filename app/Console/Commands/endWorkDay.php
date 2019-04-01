@@ -64,7 +64,10 @@ class endWorkDay extends Command
                 $database->getReference('Employees/'.$key.'/attendance/'.$date)->set([
                                                                                         'day' => $day,
                                                                                         'in' => 'null',
-                                                                                        'out' => 'null'    
+                                                                                          
+                                                                                    ]);
+                $database->getReference('Employees/'.$key.'/attendance/'.$date)->set([
+                                                                                        'out' => 'null',
                                                                                     ]);
             }
         }
