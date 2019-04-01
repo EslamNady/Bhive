@@ -8,7 +8,7 @@
                     {{ session()->get('message') }}
                </div>
            @endif
-             <div name="{{ $employee->name }}" Emptitle="{{ $employee->title }}" employeeID="{{ Auth::id() }}" score="{{ $employee->score }}" id="employeeProfile"></div>
+             <div first_name="{{ $employee->first_name }}" last_name="{{ $employee->last_name }}" Emptitle="{{ $employee->title }}" employeeID="{{ Auth::id() }}" score="{{ $employee->score }}" id="employeeProfile"></div>
         </div>
         @endsection
 

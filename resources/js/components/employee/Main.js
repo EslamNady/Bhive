@@ -9,7 +9,8 @@ class EmployeeProfile extends Component {
         super(props);
         this.state = {
             id: parseInt(document.getElementById('employeeProfile').getAttribute('employeeID')),
-            name: document.getElementById('employeeProfile').getAttribute('name'),
+            first_name: document.getElementById('employeeProfile').getAttribute('first_name'),
+            last_name: document.getElementById('employeeProfile').getAttribute('last_name'),
             title: document.getElementById('employeeProfile').getAttribute('Emptitle'),
             score: document.getElementById('employeeProfile').getAttribute('score')
         }
@@ -18,7 +19,7 @@ class EmployeeProfile extends Component {
     render() {
         return (
             <div className="employee-wrapper mt-2">
-                <EmployeeInfo name={this.state.name} id={this.state.id} title={this.state.title} score={this.state.score}></EmployeeInfo>
+                <EmployeeInfo name={this.state.first_name + " " + this.state.last_name} id={this.state.id} title={this.state.title} score={this.state.score}></EmployeeInfo>
                 <div className="px-5 my-4">
                     <h4 className="ml-5">Skills</h4>
                     <SkillsWrapper employeeID={this.state.id}></SkillsWrapper>

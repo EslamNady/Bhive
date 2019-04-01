@@ -41,17 +41,21 @@ class EmployeesLoginController extends Controller
         $this->validate($request,[
             'email' => 'required|email|unique:employees',
             'password' => 'required|confirmed|min:6',
-            'name' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
             'title' => 'required'
         ]);
         $employee=new Employee;
-        $employee->name=$request->name;
+        $employee->first_name=$request->first_name;
+        $employee->last_name=$request->last_name;
+        
         $employee->title=$request->title;
         $employee->password= Hash::make($request->password);
         $employee->email=$request->email;
-        // $employee->save();
+        $employee->save();
         $emp=new Employee;
-        $emp->name=$request->name;
+        $emp->first_name=$request->first_name;
+        $emp->last_name=$request->last_name;
         $emp->email=$request->email;
         $emp->password=$request->password;
         $emp->title=$request->title;

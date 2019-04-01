@@ -21,7 +21,7 @@ class SubmittedTasksList extends Component {
                 for (var i = 0; i < array.length; i++) {
                     for (var j = 0; j < array[i].submissions.length; j++) {
                         if (array[i].submissions[j].submitted == 1) {
-                            modified.push({ "name": array[i].name, "id": array[i].submissions[j].id, "emp_name": array[i].submissions[j].employee_name, "emp_title": array[i].submissions[j].employee_title, "note": array[i].submissions[j].note, "link": array[i].submissions[j].submission_link, "submission_date": array[i].submissions[j].submission_date, "gave_feedback": array[i].submissions[j].gave_feedback });
+                            modified.push({ "name": array[i].name, "id": array[i].submissions[j].id, "emp_first_name": array[i].submissions[j].employee_first_name, "emp_title": array[i].submissions[j].employee_title, "note": array[i].submissions[j].note, "link": array[i].submissions[j].submission_link, "submission_date": array[i].submissions[j].submission_date, "gave_feedback": array[i].submissions[j].gave_feedback });
                         }
                     }
 

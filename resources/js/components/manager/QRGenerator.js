@@ -11,20 +11,21 @@ class QRGenerator extends Component {
     componentWillMount() {
         axios.get("/getCurrentTime").then(response => {
             this.setState({
-                QrValue: response.data.date
+                QrValue: response.data
             });
             console.log(response.data)
         });
         setInterval(() => {
 
             axios.get("/getCurrentTime").then(response => {
+                // console.log(response.data.substring(0, response.data.indexOf('.')));
                 this.setState({
-                    QrValue: response.data.date
+                    QrValue: response.data
                 });
                 console.log(response.data)
             });
 
-        }, 1 * 1000);
+        }, 1.1 * 1000);
 
 
 

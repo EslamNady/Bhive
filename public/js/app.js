@@ -14176,8 +14176,8 @@ __webpack_require__(58);
 __webpack_require__(65);
 __webpack_require__(74);
 __webpack_require__(82);
-__webpack_require__(94);
 __webpack_require__(87);
+__webpack_require__(88);
 
 /***/ }),
 /* 23 */
@@ -62512,7 +62512,7 @@ var TaskInfoCard = function (_Component) {
                                 'span',
                                 { className: 'font-weight-bold' },
                                 ' ',
-                                employee.name
+                                employee.first_name
                             )
                         );
                     })
@@ -62575,7 +62575,7 @@ var SubmittedTasksList = function (_Component) {
                 for (var i = 0; i < array.length; i++) {
                     for (var j = 0; j < array[i].submissions.length; j++) {
                         if (array[i].submissions[j].submitted == 1) {
-                            modified.push({ "name": array[i].name, "id": array[i].submissions[j].id, "emp_name": array[i].submissions[j].employee_name, "emp_title": array[i].submissions[j].employee_title, "note": array[i].submissions[j].note, "link": array[i].submissions[j].submission_link, "submission_date": array[i].submissions[j].submission_date, "gave_feedback": array[i].submissions[j].gave_feedback });
+                            modified.push({ "name": array[i].name, "id": array[i].submissions[j].id, "emp_first_name": array[i].submissions[j].employee_first_name, "emp_title": array[i].submissions[j].employee_title, "note": array[i].submissions[j].note, "link": array[i].submissions[j].submission_link, "submission_date": array[i].submissions[j].submission_date, "gave_feedback": array[i].submissions[j].gave_feedback });
                         }
                     }
                 }
@@ -62860,7 +62860,7 @@ var SubmittedTask = function (_Component) {
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                         "div",
                                         { className: "emp-info text-center" },
-                                        this.props.task.emp_name,
+                                        this.props.task.emp_first_name,
                                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                             "small",
                                             { className: "text-muted" },
@@ -62895,7 +62895,7 @@ var SubmittedTask = function (_Component) {
                                         { className: "text-muted" },
                                         "By what percent you find the task is completed?"
                                     ),
-                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { className: "form-control", ref: "feedback_completed", onChange: this.changeFeedbackCompleted, value: this.state.taskFeedback_completed, type: "range", min: "0", max: "100" }),
+                                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { className: "form-control", ref: "feedback_completed", onChange: this.changeFeedbackCompleted, value: this.state.taskFeedback_completed, type: "range", min: "0", max: "100", style: { "cursor": "col-resize" } }),
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                         "small",
                                         { className: "d-block text-right" },
@@ -62972,7 +62972,7 @@ var SubmittedTask = function (_Component) {
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             "div",
                             { className: "emp-info text-center" },
-                            this.props.task.emp_name,
+                            this.props.task.emp_first_name,
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 "small",
                                 { className: "text-muted" },
@@ -63054,7 +63054,8 @@ var EmployeeProfile = function (_Component) {
 
         _this.state = {
             id: parseInt(document.getElementById('employeeProfile').getAttribute('employeeID')),
-            name: document.getElementById('employeeProfile').getAttribute('name'),
+            first_name: document.getElementById('employeeProfile').getAttribute('first_name'),
+            last_name: document.getElementById('employeeProfile').getAttribute('last_name'),
             title: document.getElementById('employeeProfile').getAttribute('Emptitle'),
             score: document.getElementById('employeeProfile').getAttribute('score')
         };
@@ -63067,7 +63068,7 @@ var EmployeeProfile = function (_Component) {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 "div",
                 { className: "employee-wrapper mt-2" },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__EmployeeInfo__["a" /* default */], { name: this.state.name, id: this.state.id, title: this.state.title, score: this.state.score }),
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__EmployeeInfo__["a" /* default */], { name: this.state.first_name + " " + this.state.last_name, id: this.state.id, title: this.state.title, score: this.state.score }),
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     "div",
                     { className: "px-5 my-4" },
@@ -64102,7 +64103,7 @@ var ManagerProfile = function (_Component) {
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     "a",
                                     { className: "btn btn-primary  ", href: "/attendance-QR" },
-                                    "Create a new project"
+                                    "Generate attendance QR"
                                 )
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -64467,7 +64468,151 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_qrcode_react__ = __webpack_require__(88);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+var SubmitTaskMain = function (_Component) {
+    _inherits(SubmitTaskMain, _Component);
+
+    function SubmitTaskMain(props) {
+        _classCallCheck(this, SubmitTaskMain);
+
+        var _this = _possibleConstructorReturn(this, (SubmitTaskMain.__proto__ || Object.getPrototypeOf(SubmitTaskMain)).call(this, props));
+
+        _this.state = {
+            task: {}
+        };
+        _this.submit = _this.submit.bind(_this);
+
+        return _this;
+    }
+
+    _createClass(SubmitTaskMain, [{
+        key: "componentWillMount",
+        value: function componentWillMount() {
+            this.setState({
+                task: JSON.parse(document.getElementById("submissionView").getAttribute("task"))
+            });
+        }
+    }, {
+        key: "validURL",
+        value: function validURL(str) {
+            var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+            '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+            '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+            '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+            '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+            '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
+            return !!pattern.test(str);
+        }
+    }, {
+        key: "submit",
+        value: function submit() {
+            var link = this.refs.link.value;
+            var comment = this.refs.comment.value;
+            console.log(this.validURL(link));
+            if (!(link == "" && comment == "") && this.validURL(link)) {
+                axios({
+                    method: "post",
+                    url: "../../employees/submit",
+                    data: {
+                        link: link,
+                        comment: comment,
+                        task: this.state.task
+                    }
+                }).then(function (response) {
+                    window.location = "/employees";
+                    // console.log(response.data);
+                }).catch(function (error) {
+                    console.log(error.response.data);
+                });
+            }
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                "div",
+                { className: "submit-wrapper" },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    "div",
+                    { className: "container" },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        { className: "task-info" },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "task-name" },
+                            this.state.task.name
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "task-startdate" },
+                            this.state.task.startDate.substring(0, this.state.task.startDate.indexOf(" "))
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "task-enddate" },
+                            this.state.task.endDate.substring(0, this.state.task.endDate.indexOf(" "))
+                        )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        "div",
+                        null,
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            "div",
+                            { className: "form-group" },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "label",
+                                null,
+                                "Link:"
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { ref: "link", className: "form-control", type: "url", placeholder: "Repositry link" }),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "label",
+                                null,
+                                " Comment:"
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("textarea", { ref: "comment", className: "form-control", placeholder: "Any comment" }),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                "button",
+                                { onClick: this.submit, className: "btn btn-block btn-success mt-2" },
+                                "Submit Task"
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return SubmitTaskMain;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["default"] = (SubmitTaskMain);
+if (document.getElementById("submissionView")) {
+    __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(SubmitTaskMain, null), document.getElementById("submissionView"));
+}
+
+/***/ }),
+/* 88 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_qrcode_react__ = __webpack_require__(89);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_qrcode_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_qrcode_react__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -64502,19 +64647,20 @@ var QRGenerator = function (_Component) {
 
             axios.get("/getCurrentTime").then(function (response) {
                 _this2.setState({
-                    QrValue: response.data.date
+                    QrValue: response.data
                 });
                 console.log(response.data);
             });
             setInterval(function () {
 
                 axios.get("/getCurrentTime").then(function (response) {
+                    // console.log(response.data.substring(0, response.data.indexOf('.')));
                     _this2.setState({
-                        QrValue: response.data.date
+                        QrValue: response.data
                     });
                     console.log(response.data);
                 });
-            }, 1 * 1000);
+            }, 1.1 * 1000);
         }
     }, {
         key: 'render',
@@ -64536,7 +64682,7 @@ if (document.getElementById("QR-container")) {
 }
 
 /***/ }),
-/* 88 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -64576,7 +64722,7 @@ var PropTypes = __webpack_require__(16); // qr.js doesn't handle error level of 
 // thus the deep require.
 
 
-var QRCodeImpl = __webpack_require__(89);
+var QRCodeImpl = __webpack_require__(90);
 
 var ErrorCorrectLevel = __webpack_require__(18); // Convert from UTF-16, forcing the use of byte-mode encoding in our QR Code.
 // This allows us to encode Hanji, Kanji, emoji, etc. Ideally we'd do more
@@ -64895,13 +65041,13 @@ QRCode.defaultProps = _objectSpread({
 module.exports = QRCode;
 
 /***/ }),
-/* 89 */
+/* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var BitByte = __webpack_require__(90);
-var RSBlock = __webpack_require__(91);
-var BitBuffer = __webpack_require__(92);
-var util = __webpack_require__(93);
+var BitByte = __webpack_require__(91);
+var RSBlock = __webpack_require__(92);
+var BitBuffer = __webpack_require__(93);
+var util = __webpack_require__(94);
 var Polynomial = __webpack_require__(19);
 
 function QRCode(typeNumber, errorCorrectLevel) {
@@ -65339,7 +65485,7 @@ module.exports = QRCode;
 
 
 /***/ }),
-/* 90 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var mode = __webpack_require__(17);
@@ -65368,7 +65514,7 @@ module.exports = QR8bitByte;
 
 
 /***/ }),
-/* 91 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // ErrorCorrectLevel
@@ -65673,7 +65819,7 @@ module.exports = QRRSBlock;
 
 
 /***/ }),
-/* 92 */
+/* 93 */
 /***/ (function(module, exports) {
 
 function QRBitBuffer() {
@@ -65717,7 +65863,7 @@ module.exports = QRBitBuffer;
 
 
 /***/ }),
-/* 93 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Mode = __webpack_require__(17);
@@ -66000,150 +66146,6 @@ var QRUtil = {
 
 module.exports = QRUtil;
 
-
-/***/ }),
-/* 94 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-
-var SubmitTaskMain = function (_Component) {
-    _inherits(SubmitTaskMain, _Component);
-
-    function SubmitTaskMain(props) {
-        _classCallCheck(this, SubmitTaskMain);
-
-        var _this = _possibleConstructorReturn(this, (SubmitTaskMain.__proto__ || Object.getPrototypeOf(SubmitTaskMain)).call(this, props));
-
-        _this.state = {
-            task: {}
-        };
-        _this.submit = _this.submit.bind(_this);
-
-        return _this;
-    }
-
-    _createClass(SubmitTaskMain, [{
-        key: "componentWillMount",
-        value: function componentWillMount() {
-            this.setState({
-                task: JSON.parse(document.getElementById("submissionView").getAttribute("task"))
-            });
-        }
-    }, {
-        key: "validURL",
-        value: function validURL(str) {
-            var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
-            '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-            '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-            '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-            '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-            '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
-            return !!pattern.test(str);
-        }
-    }, {
-        key: "submit",
-        value: function submit() {
-            var link = this.refs.link.value;
-            var comment = this.refs.comment.value;
-            console.log(this.validURL(link));
-            if (!(link == "" && comment == "") && this.validURL(link)) {
-                axios({
-                    method: "post",
-                    url: "../../employees/submit",
-                    data: {
-                        link: link,
-                        comment: comment,
-                        task: this.state.task
-                    }
-                }).then(function (response) {
-                    window.location = "/employees";
-                    // console.log(response.data);
-                }).catch(function (error) {
-                    console.log(error.response.data);
-                });
-            }
-        }
-    }, {
-        key: "render",
-        value: function render() {
-            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                "div",
-                { className: "submit-wrapper" },
-                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                    "div",
-                    { className: "container" },
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "div",
-                        { className: "task-info" },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            { className: "task-name" },
-                            this.state.task.name
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            { className: "task-startdate" },
-                            this.state.task.startDate.substring(0, this.state.task.startDate.indexOf(" "))
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            { className: "task-enddate" },
-                            this.state.task.endDate.substring(0, this.state.task.endDate.indexOf(" "))
-                        )
-                    ),
-                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        "div",
-                        null,
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            "div",
-                            { className: "form-group" },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                "label",
-                                null,
-                                "Link:"
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", { ref: "link", className: "form-control", type: "url", placeholder: "Repositry link" }),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                "label",
-                                null,
-                                " Comment:"
-                            ),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("textarea", { ref: "comment", className: "form-control", placeholder: "Any comment" }),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                "button",
-                                { onClick: this.submit, className: "btn btn-block btn-success mt-2" },
-                                "Submit Task"
-                            )
-                        )
-                    )
-                )
-            );
-        }
-    }]);
-
-    return SubmitTaskMain;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["default"] = (SubmitTaskMain);
-if (document.getElementById("submissionView")) {
-    __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(SubmitTaskMain, null), document.getElementById("submissionView"));
-}
 
 /***/ }),
 /* 95 */

@@ -11,19 +11,26 @@ class FirebaseController extends Controller
     //
     public function signupFirebase(){
         $employee=Session::get('employee');
-        var_dump($employee);
         $employee=json_decode($employee);
-        $serviceAccount = ServiceAccount::fromJsonFile(__DIR__.'/bhive-7020b-firebase-adminsdk-rrhlt-fc9dfba6b6.json');
+        $serviceAccount = ServiceAccount::fromJsonFile(storage_path().'/json/bhive-7020b-firebase-adminsdk-rrhlt-fc9dfba6b6.json');
         $firebase = (new Factory)
         ->withServiceAccount($serviceAccount)
         ->withDatabaseUri('https://bhive-7020b.firebaseio.com/')
         ->create();
         $database = $firebase->getDatabase();
-        
-        $newPost = $database->getReference('Employee')->getChild(preg_replace('/\./', ',', $employee->email))->set([
+        $timeTable=$database->getReference('TimeTable')->getValue();
+        $newEmployee = $database->getReference('Employees')->getChild(preg_replace('/\./', ',', $employee->email))->set([
+                                                                'info'=> [
                                                                 'email' => $employee->email,
+                                                                'first_name'=>$employee->first_name,
+                                                                'last_name'=>$employee->last_name,
+                                                                'title' => $employee->title ],
+                                                                'attendanceScore'=> 0,
+                                                                'working_days_num'=> 0,
+                                                                'attended_days_num' => 0,
+                                                                'timeTable'=>$timeTable,
                                                                 'password' => $employee->password,
-                                                                'title' => $employee->title,
+
                                                                 ]);
         // //$newPost->getKey(); // => -KVr5eu8gcTv7_AHb-3-
         //$newPost->getUri(); // => https://my-project.firebaseio.com/blog/posts/-KVr5eu8gcTv7_AHb-3-
@@ -31,7 +38,7 @@ class FirebaseController extends Controller
         //$newPost->getValue(); // Fetches the data from the realtime database
         //$newPost->remove();
 
-        // return redirect()->route('employees.login')->withInput(['email'=>$request->email]);
+        return redirect()->route('employees.login')->withInput(['email'=> $employee->email]);
     }
 }
 ?>

@@ -31,7 +31,7 @@ class ManagerProfile extends Component {
                         </div>
                         <div className="col-6">
                             <div className="mb-3 text-right">
-                                <a className="btn btn-primary  " href="/attendance-QR">Create a new project</a>
+                                <a className="btn btn-primary  " href="/attendance-QR">Generate attendance QR</a>
                             </div>
                             <div className="projectList-wrapper">
                                 <div className="bg-wrapper">

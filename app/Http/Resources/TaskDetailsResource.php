@@ -16,7 +16,7 @@ class TaskDetailsResource extends JsonResource
     {
         return [
             'id' => $this->pivot->id,
-            'employee_name' => $this->name,
+            'employee_first_name' => $this->first_name,
             'employee_title' => $this->title,
             'note'=> $this->pivot->note,
             'submission_link' => $this->pivot->submission_link,

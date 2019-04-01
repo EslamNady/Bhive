@@ -107,7 +107,7 @@ class SubmittedTask extends Component {
                             </div>
                             <div className="modal-body pt-1">
                                 <div className="emp-info text-center">
-                                    {this.props.task.emp_name}
+                                    {this.props.task.emp_first_name}
                                     <small className="text-muted">/{this.props.task.emp_title} </small>
 
                                 </div>
@@ -123,7 +123,7 @@ class SubmittedTask extends Component {
                                 </div>
                                 <hr />
                                 <small className="text-muted">By what percent you find the task is completed?</small>
-                                <input className="form-control" ref="feedback_completed" onChange={this.changeFeedbackCompleted} value={this.state.taskFeedback_completed} type="range" min="0" max="100" />
+                                <input className="form-control" ref="feedback_completed" onChange={this.changeFeedbackCompleted} value={this.state.taskFeedback_completed} type="range" min="0" max="100" style={{ "cursor": "col-resize" }} />
                                 <small className="d-block text-right">{this.state.taskFeedback_completed + "%"}</small>
 
                                 <small className="text-muted">How complex was the task ?</small>
@@ -161,7 +161,7 @@ class SubmittedTask extends Component {
                     </div>
                     <div className="card-body pt-1">
                         <div className="emp-info text-center">
-                            {this.props.task.emp_name}
+                            {this.props.task.emp_first_name}
                             <small className="text-muted">/{this.props.task.emp_title} </small>
 
                         </div>
