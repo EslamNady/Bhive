@@ -27,6 +27,7 @@ class FirebaseController extends Controller
                                                                 'title' => $employee->title ],
                                                                 'attendanceScore'=> 0,
                                                                 'working_days_num'=> 0,
+                                                                'lastDayScore'=>0,
                                                                 'attended_days_num' => 0,
                                                                 'timeTable'=>$timeTable,
                                                                 'password' => $employee->password,
