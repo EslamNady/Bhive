@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import SystemSkills from "./SystemSkills";
 import ProjectListView from './ProjectListView';
+import Calendar from "./Calender/Calendar";
 
 // import SubmittedTasks from './SubmittedTasks';
 class ManagerProfile extends Component {
@@ -40,6 +41,10 @@ class ManagerProfile extends Component {
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div >
+
+                        <Calendar />
                     </div>
 
                 </div>
