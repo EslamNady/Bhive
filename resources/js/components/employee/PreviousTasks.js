@@ -42,7 +42,7 @@ class PreviousTasks extends Component {
                                             {task.start_date}
                                         </div>
                                         <div className="end-date">
-                                            <small className="text-muted">End Date: </small>
+                                            <small className="text-muted">Deadline: </small>
                                             {task.end_date}
                                         </div>
                                     </li>

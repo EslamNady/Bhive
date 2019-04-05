@@ -29,6 +29,7 @@ class FirebaseController extends Controller
                                                                 'working_days_num'=> 0,
                                                                 'lastDayScore'=>0,
                                                                 'attended_days_num' => 0,
+                                                                'timeTableStatus'=>'default',
                                                                 'timeTable'=>$timeTable,
                                                                 'password' => $employee->password,
 

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
+import $ from "jquery"
 import axios from "axios";
 import TemplateTask from "./TemplateTask";
 import LogReader from "./LogReader";
@@ -71,43 +71,50 @@ class EditTemplate extends Component {
     }
 
     onFinish() {
-        if (this.state.tasks) {
-            axios({
-                method: "post",
-                url: "../project/submit",
-                data: {
-                    name: this.refs.projectName.value,
-                    description: this.refs.description.value,
-                    startDate: this.refs.startDate.value,
-                    tasks: this.state.tasks
-                }
-            })
-                .then(response => {
-                    console.log(response.data);
+        if (this.refs.projectName.value != "" && this.refs.description.value != "" && this.refs.startDate.value != "") {
+            if (this.state.tasks) {
+                axios({
+                    method: "post",
+                    url: "../project/submit",
+                    data: {
+                        name: this.refs.projectName.value,
+                        description: this.refs.description.value,
+                        startDate: this.refs.startDate.value,
+                        tasks: this.state.tasks
+                    }
                 })
-                .catch(function (error) {
-                    console.log(error.response.data);
-                });
+                    .then(response => {
+                        console.log(response.data);
+                        $("#validateProjectbtn").click();
+                    })
+                    .catch(function (error) {
+                        console.log(error.response.data);
+                    });
+            }
         }
     }
     addNewTemplate() {
-        if (this.state.tasks) {
-            console.log(this.state.tasks);
-            axios({
-                method: "post",
-                url: "../template/addNew",
-                data: {
-                    name: this.refs.projectName.value,
-                    description: this.refs.description.value,
-                    tasks: this.state.tasks
-                }
-            })
-                .then(response => {
-                    console.log(response.data);
+        if (this.refs.projectName.value != "" && this.refs.description.value != "") {
+
+            if (this.state.tasks) {
+                console.log(this.state.tasks);
+                axios({
+                    method: "post",
+                    url: "../template/addNew",
+                    data: {
+                        name: this.refs.projectName.value,
+                        description: this.refs.description.value,
+                        tasks: this.state.tasks
+                    }
                 })
-                .catch(function (error) {
-                    console.log(error.response.data);
-                });
+                    .then(response => {
+                        console.log(response.data);
+                        $('#validateTemplatebtn').click()
+                    })
+                    .catch(function (error) {
+                        console.log(error.response.data);
+                    });
+            }
         }
     }
     deleteTask(index) {
@@ -165,10 +172,11 @@ class EditTemplate extends Component {
                 <div className="btn-group btn-wrapper" role="group">
                     <button className="btn " onClick={this.add}>ADD Task</button>
                     <button className="btn " onClick={this.addNewTemplate}>Add new Template</button>
-                    <button className="btn " data-toggle="modal" data-target="#created" onClick={this.onFinish}>Create New Project</button>
+                    <button className="btn " onClick={this.onFinish}>Create New Project</button>
                 </div>
+                <div id="validateProjectbtn" data-toggle="modal" data-target="#Projectcreated"></div>
 
-                <div className="modal fade" id="created" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div className="modal fade" id="Projectcreated" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div className="modal-dialog modal-dialog-centered" role="document">
                         <div className="modal-content">
 
@@ -178,6 +186,24 @@ class EditTemplate extends Component {
                                 </div>
                                 <div className="text-center my-2">
                                     <a href="/home">Back Home</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div id="validateTemplatebtn" data-toggle="modal" data-target="#Templatecreated"></div>
+
+                <div className="modal fade" id="Templatecreated" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered" role="document">
+                        <div className="modal-content">
+
+                            <div className="modal-body">
+                                <div className="text-success text-center">
+                                    Template is Created
+                                </div>
+                                <div className="text-center my-2">
+                                    <a href="/project/create">OK</a>
                                 </div>
                             </div>
 

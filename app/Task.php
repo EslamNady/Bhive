@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Task extends Model
 {
     protected $fillable = [
-        'id','name', 'duration','slack', 'endDate', 'startDate','temp_id','project_id','resources_number',
+        'id','name', 'duration','slack', 'endDate', 'startDate','temp_id','project_id','resources_number','is_dead',
     ];
     protected $dates=['startDate','endDate'];
     public function Project()

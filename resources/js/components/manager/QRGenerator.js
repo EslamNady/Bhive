@@ -25,7 +25,7 @@ class QRGenerator extends Component {
                 console.log(response.data)
             });
 
-        }, 1.1 * 1000);
+        }, 60 * 1000);
 
 
 

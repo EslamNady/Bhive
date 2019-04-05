@@ -9,7 +9,7 @@ class UpcomingTasks extends Component {
     componentWillMount() {
         axios.get('/employees/upcomingtasks' + this.props.employeeID
         ).then(response => {
-            console.log(response.data.data);
+
             this.setState({
                 upcomingTasks: response.data.data,
             });
@@ -43,7 +43,7 @@ class UpcomingTasks extends Component {
                                             {task.start_date}
                                         </div>
                                         <div className="end-date">
-                                            <small className="text-muted">End Date: </small>
+                                            <small className="text-muted">Deadline: </small>
                                             {task.end_date}
                                         </div>
                                     </li>

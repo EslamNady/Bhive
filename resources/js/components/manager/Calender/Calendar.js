@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import * as firebase from "firebase";
-import WorkingDays from "./WorkingDays"
+import WorkingDays from "./WorkingDays";
+import Holidays from "./Holidays";
+import EmployeesWorkingDays from './EmployeesWorkingDays'
 
 
 
@@ -23,7 +25,8 @@ class Calendar extends Component {
 
     }
     componentWillMount() {
-        this.setState({ fireDB: firebase.database().ref() })
+        this.setState({ fireDB: firebase.database().ref() });
+
     }
 
     render() {
@@ -42,8 +45,8 @@ class Calendar extends Component {
             </ul>
             <div className="tab-content" id="pills-tabContent">
                 <div className="tab-pane fade show active" id="pills-WorkingDays" role="tabpanel" aria-labelledby="pills-home-tab"><WorkingDays fireDB={this.state.fireDB} /></div>
-                <div className="tab-pane fade" id="pills-Holidays" role="tabpanel" aria-labelledby="pills-profile-tab">...</div>
-                <div className="tab-pane fade" id="pills-EmployeesWD" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
+                <div className="tab-pane fade" id="pills-Holidays" role="tabpanel" aria-labelledby="pills-profile-tab"><Holidays fireDB={this.state.fireDB} /> </div>
+                <div className="tab-pane fade" id="pills-EmployeesWD" role="tabpanel" aria-labelledby="pills-contact-tab"><EmployeesWorkingDays fireDB={this.state.fireDB} /></div>
             </div>
 
         </div>);

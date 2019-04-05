@@ -227,7 +227,7 @@ class TemplateTask extends Component {
                     </div>
                     <div className="col-6">
                         <label>Duration <small className="text-muted">In Days</small></label>
-                        <input className="form-control d-inline" type="number" ref="duration" placeholder="Task duration" defaultValue={this.props.task.duration} />
+                        <input className="form-control d-inline" type="number" min={1} ref="duration" placeholder="Task duration" defaultValue={this.props.task.duration} />
                     </div>
                 </div>
                 <div className="predecessors-wrapper mt-3">

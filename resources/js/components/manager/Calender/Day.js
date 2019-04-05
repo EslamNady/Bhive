@@ -25,7 +25,8 @@ class Day extends Component {
         })
     }
     componentWillMount() {
-
+        this.timerIn = null;
+        this.timerOut = null;
         this.setState({
             name: this.props.name,
             in: this.props.day.in,
@@ -35,7 +36,7 @@ class Day extends Component {
     }
 
     input() {
-        console.log(this.state.in);
+
         if (!this.state.weekend) {
             return (<React.Fragment>
                 <input className="form-control" onChange={this.changeIN} ref="in" value={this.state.in} type="time" />
@@ -43,33 +44,101 @@ class Day extends Component {
             </React.Fragment>)
         } else {
             return (<React.Fragment>
-                <input className="form-control" onChange={console.log("a dah")} value={this.state.in} type="time" disabled />
-                <input className="form-control" onChange={console.log("a dah")} value={this.state.out} type="time" disabled />
+                <input className="form-control text-center" onChange={console.log()} value={"Weekend"} type="text" disabled />
+                {/* <input className="form-control" onChange={console.log("a dah")} value={this.state.out} type="time" disabled /> */}
             </React.Fragment>)
         }
     }
+    dayLabel() {
+        if (!this.state.weekend) {
+            return (
+                <React.Fragment>
+                    <label className="text-success">{this.state.name}</label>
+                </React.Fragment>
+            )
+        } else {
+            return (
+
+                <label className="text-secondary">{this.state.name}</label>
+            )
+        }
+    }
     changeIN() {
-        this.props.fireDB.child("TimeTable/" + this.state.name + "/in").set(this.refs.in.value)
+
+        clearTimeout(this.timerIn);
+
+        this.setState({ in: this.refs.in.value });
+
+        this.timerIn = setTimeout(() => {
+
+
+            if (this.refs.in.value == "") {
+                this.props.fireDB.child(this.props.target + this.state.name).set({ in: "null", out: "null" })
+                this.setState({ weekend: true })
+            }
+            else
+                this.props.fireDB.child(this.props.target + this.state.name + "/in").set(this.refs.in.value)
+
+        }, 700);
+
+        if (this.props.target.substring(0, this.props.target.indexOf('/')) == "Employees") {
+            this.props.fireDB.child(this.props.empPath + "timeTableStatus").set("custom");
+        }
     }
     changeOut() {
-        this.props.fireDB.child("TimeTable/" + this.state.name + "/out").set(this.refs.out.value)
+
+        clearTimeout(this.timerOut);
+
+        this.setState({ out: this.refs.out.value });
+
+        this.timerOut = setTimeout(() => {
+
+            if (this.refs.out.value == "") {
+                this.props.fireDB.child(this.props.target + this.state.name).set({ in: "null", out: "null" })
+                this.setState({ weekend: true })
+            }
+            else
+                this.props.fireDB.child(this.props.target + this.state.name + "/out").set(this.refs.out.value)
+
+        }, 700);
+        if (this.props.target.substring(0, this.props.target.indexOf('/')) == "Employees") {
+            this.props.fireDB.child(this.props.empPath + "timeTableStatus").set("custom");
+        }
     }
     weekend(e) {
         if (e.target.checked) {
-            this.props.fireDB.child("TimeTable/" + this.state.name).set({ in: "null", out: "null" })
+            this.props.fireDB.child(this.props.target + this.state.name).set({ in: "null", out: "null" })
         } else {
-            this.props.fireDB.child("TimeTable/" + this.state.name).set({ in: "08:00", out: "19:00" })
+            this.props.fireDB.child(this.props.target + this.state.name).set({ in: "09:00", out: "17:00" })
         }
         this.setState({ weekend: e.target.checked });
+
+        if (this.props.target.substring(0, this.props.target.indexOf('/')) == "Employees") {
+            this.props.fireDB.child(this.props.empPath + "timeTableStatus").set("custom");
+        }
 
     }
 
     render() {
         return (<div>
-            <div className="form-group form-inline">
-                <label>{this.state.name}</label>
-                {this.input()}
-                <label className="ml-2">weekend:</label><input onChange={this.weekend} checked={this.state.weekend} type="checkbox" />
+            <div className="container mb-1">
+
+                <div className="row mx-auto" style={{ width: "80%" }}>
+                    <div className="col-1 text-right text-uppercase font-weight-bold pt-2 pr-0 " >
+
+                        {this.dayLabel()}
+                    </div>
+                    <div className="col-10">
+                        <div className="d-flex flex-row justify-content-center">
+
+                            {this.input()}
+
+                        </div>
+                    </div>
+                    <div className="col-1 pt-2 pl-0 text-nowrap">
+                        <label className="ml-2">weekend:</label><input className="ml-1 weekend-checkbox" onChange={this.weekend} checked={this.state.weekend} type="checkbox" />
+                    </div>
+                </div>
             </div>
         </div>);
     }

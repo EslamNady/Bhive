@@ -78,6 +78,13 @@ class EmployeesController extends Controller
     public function getOngoingTasks($employeeID){
         $today=Carbon::today()->toDateString();
         $tasks=Employee::find($employeeID)->tasks()->where('startDate','<=',$today)->wherePivot('submitted',"=",false)->get();
+        foreach($tasks as $task){
+            if($task->endDate<$today)
+                $task->is_dead=true;
+            else {
+                $task->is_dead=false;
+            }
+        }
         return ActivityResource::collection($tasks);
 
     }

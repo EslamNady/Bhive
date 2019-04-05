@@ -8,16 +8,28 @@ class WorkingDays extends Component {
         this.state = { days: "" }
 
     }
-    componentDidMount() {
+    componentWillMount() {
         this.props.fireDB.child("TimeTable").on("value", snap => {
-            this.setState({ days: snap.val() })
+            var days = snap.val();
+            this.setState({ days: days });
+
+            this.props.fireDB.child("Employees").once('value', EmpSnap => {
+
+                var emps = EmpSnap.val()
+                for (var key in emps) {
+                    if (emps[key]['timeTableStatus'] == "default") {
+                        this.props.fireDB.child("Employees/" + key + "/timeTable").set(days);
+                    }
+                }
+            });
         })
+
     }
     render() {
-        console.log(this.state.days);
-        return (<div>
+
+        return (<div className="py-4">
             {Object.keys(this.state.days).map((key, i) => (
-                <Day key={i} name={key} day={this.state.days[key]} fireDB={this.props.fireDB} />
+                <Day key={i} name={key} day={this.state.days[key]} target="TimeTable/" fireDB={this.props.fireDB} />
             ))}
         </div>);
     }

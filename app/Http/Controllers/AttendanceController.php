@@ -7,7 +7,7 @@ use Carbon\Carbon;
 class AttendanceController extends Controller
 {
     public function getCurrentTime(){
-        $dateTime=Carbon::now('eet')->format("D y-m-d H:i:s");
+        $dateTime=Carbon::now('GMT+2')->format("D y-m-d H:i");
         
          return  $dateTime;
     }

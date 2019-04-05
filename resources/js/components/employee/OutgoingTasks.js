@@ -13,11 +13,27 @@ class OutgoingTasks extends Component {
             this.setState({
                 outgoingTasks: response.data.data,
             });
-
+            console.log(response.data.data);
         }).catch(function (error) {
             console.log(error.response.data);
         });
 
+    }
+    deadline(task) {
+        if (task.is_dead) {
+            return (
+                <div className="end-date text-danger">
+                    <small>Deadline: </small>
+                    {task.end_date}
+                </div>);
+        } else {
+            return (
+                <div className="end-date">
+                    <small className="text-muted">Deadline: </small>
+                    {task.end_date}
+                </div>
+            );
+        }
     }
 
     render() {
@@ -43,10 +59,7 @@ class OutgoingTasks extends Component {
                                             <small className="text-muted">Start Date: </small>
                                             {task.start_date}
                                         </div>
-                                        <div className="end-date">
-                                            <small className="text-muted">End Date: </small>
-                                            {task.end_date}
-                                        </div>
+                                        {this.deadline(task)}
                                     </a>
                                 ))}
                             </ul>
