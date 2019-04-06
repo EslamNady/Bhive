@@ -15,10 +15,12 @@ class EmployeesWorkingDays extends Component {
     }
     render() {
         return (<div className="py-4">
-            {Object.keys(this.state.employees).map((key, i) => (
-                <EmployeeTimeTable key={i} index={"emp" + i} empID={key} emp={this.state.employees[key]} fireDB={this.props.fireDB} />
+            <div style={{ height: "400px", overflowY: "auto", border: "1px solid #eee", borderRadius: "3px" }}>
+                {Object.keys(this.state.employees).map((key, i) => (
+                    <EmployeeTimeTable key={i} index={"emp" + i} empID={key} emp={this.state.employees[key]} fireDB={this.props.fireDB} />
 
-            ))}
+                ))}
+            </div>
         </div>);
     }
 }
