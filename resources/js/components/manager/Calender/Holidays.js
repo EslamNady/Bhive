@@ -77,7 +77,7 @@ class Holidays extends Component {
                     </div>
                     <div className="col-8">
                         <ul className="list-group" >
-                            <li className="list-group-item">
+                            <li className="list-group-item" style={{ boxShadow: "black 0px 3px 6px -5px", zIndex: "2" }}>
                                 <div className="row">
                                     <div className="col-2 text-center" style={{ borderRight: "1px solid black" }}>
                                         <strong className="text-danger">MM-DD</strong>
@@ -90,7 +90,7 @@ class Holidays extends Component {
                                     </div>
                                 </div>
                             </li>
-                            <div className="pt-2" style={{ maxHeight: "313px", overflowY: "auto" }}>
+                            <div className="pt-1" style={{ maxHeight: "313px", overflowY: "auto" }}>
                                 {Object.keys(this.state.holidays).map((key, i) => (
                                     <Holiday key={i} date={key} name={this.state.holidays[key]["name"]} fireDB={this.props.fireDB} />
 

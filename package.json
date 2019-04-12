@@ -24,6 +24,7 @@
         "react-dom": "^16.2.0"
     },
     "dependencies": {
+        "@react-pdf/renderer": "^1.5.1",
         "babel": "^6.23.0",
         "firebase": "^5.9.2",
         "qrcode.react": "^0.9.3",

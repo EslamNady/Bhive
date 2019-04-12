@@ -30,6 +30,12 @@ class Calendar extends Component {
     }
 
     render() {
+        const carkenderStyle = {
+            backgroundColor: "rgba(220,220,220,0.2)",
+            borderRadius: "5px",
+            padding: "0px 30px"
+        }
+
         return (<div>
             {this.state.name}
             <ul className="nav nav-pills nav-justified mb-3 mt-5 pt-3" id="pills-tab" role="tablist">
@@ -44,9 +50,9 @@ class Calendar extends Component {
                 </li>
             </ul>
             <div className="tab-content" id="pills-tabContent">
-                <div className="tab-pane fade show active" id="pills-WorkingDays" role="tabpanel" aria-labelledby="pills-home-tab"><WorkingDays fireDB={this.state.fireDB} /></div>
-                <div className="tab-pane fade" id="pills-Holidays" role="tabpanel" aria-labelledby="pills-profile-tab"><Holidays fireDB={this.state.fireDB} /> </div>
-                <div className="tab-pane fade" id="pills-EmployeesWD" role="tabpanel" aria-labelledby="pills-contact-tab"><EmployeesWorkingDays fireDB={this.state.fireDB} /></div>
+                <div className="tab-pane fade show active" id="pills-WorkingDays" role="tabpanel" aria-labelledby="pills-home-tab"><div style={carkenderStyle}> <WorkingDays fireDB={this.state.fireDB} /></div></div>
+                <div className="tab-pane fade" id="pills-Holidays" role="tabpanel" aria-labelledby="pills-profile-tab"><div style={carkenderStyle}> <Holidays fireDB={this.state.fireDB} /> </div></div>
+                <div className="tab-pane fade" id="pills-EmployeesWD" role="tabpanel" aria-labelledby="pills-contact-tab"><div style={carkenderStyle}> <EmployeesWorkingDays fireDB={this.state.fireDB} /></div></div>
             </div>
 
         </div>);
