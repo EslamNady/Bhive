@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import EmployeeInfo from "./EmployeeInfo";
 import SkillsWrapper from './SkillsWrapper';
 import Tasks from "./Tasks";
+import TimeTableWrapper from "./TimeTable/TimeTableWrapper"
 import * as firebase from 'firebase';
 
 class EmployeeProfile extends Component {
@@ -43,6 +44,10 @@ class EmployeeProfile extends Component {
                 <div className="px-5 my-4">
                     <h4 className="ml-5">Skills</h4>
                     <SkillsWrapper employeeID={this.state.id}></SkillsWrapper>
+                </div>
+                <div className="px-5 my-4">
+                    <h4 className="ml-5">Time Table</h4>
+                    <TimeTableWrapper email={this.state.email} fireDB={this.state.fireDB} />
                 </div>
                 <div className="container">
                     <hr />

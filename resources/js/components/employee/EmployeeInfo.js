@@ -11,7 +11,7 @@ class EmployeeInfo extends Component {
     componentWillMount() {
         var empKey = this.props.email.replace(/\./g, ',');
         this.setState({ empKey: empKey });
-        console.log("Employees/" + this.state.empKey + "/timeTable");
+
         this.props.fireDB.child("Employees/" + empKey + "/timeTable").on('value', snap => {
             var timeTable = snap.val()
             this.setState({
@@ -31,22 +31,7 @@ class EmployeeInfo extends Component {
                             <div className="score ml-2 my-2"><label className="text-muted"><small>Score:</small></label> {this.props.score}</div>
                         </div>
 
-                        <div className="col-6">
-                            {Object.keys(this.state.timeTable).map((key, i) => (
-                                <div className="row">
-                                    <div className="col-2">
-                                        {key}
-                                    </div>
-                                    <div className="col-2">
-                                        {this.state.timeTable[key].in}
-                                    </div>
-                                    <div className="col-2">
-                                        {this.state.timeTable[key].out}
-                                    </div>
 
-                                </div>
-                            ))}
-                        </div>
                     </div>
                 </div>
             </div>
