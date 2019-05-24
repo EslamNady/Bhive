@@ -8,6 +8,7 @@ class Day extends Component {
             out: "",
             weekend: false
         }
+
         this.input = this.input.bind(this)
         this.weekend = this.weekend.bind(this)
         this.changeIN = this.changeIN.bind(this);
@@ -83,17 +84,20 @@ class Day extends Component {
 
 
             if (this.refs.in.value == "") {
-                this.props.fireDB.child(this.props.target + this.state.name).set({ in: "null", out: "null" })
-                this.setState({ weekend: true })
+                this.setState({ in: "null", out: "null", weekend: true }, () => {
+                    this.sendUpdates()
+                })
             }
-            else
-                this.props.fireDB.child(this.props.target + this.state.name + "/in").set(this.refs.in.value)
+            else {
+                this.setState({ 'in': this.refs.in.value }, () => {
+                    this.sendUpdates()
+                });
+            }
+
 
         }, 700);
 
-        if (this.props.target.substring(0, this.props.target.indexOf('/')) == "Employees") {
-            this.props.fireDB.child(this.props.empPath + "timeTableStatus").set("custom");
-        }
+
     }
     changeOut() {
 
@@ -104,16 +108,19 @@ class Day extends Component {
         this.timerOut = setTimeout(() => {
 
             if (this.refs.out.value == "") {
-                this.props.fireDB.child(this.props.target + this.state.name).set({ in: "null", out: "null" })
-                this.setState({ weekend: true })
+                this.setState({ in: "null", out: "null", weekend: true }, () => {
+                    this.sendUpdates()
+                })
             }
-            else
-                this.props.fireDB.child(this.props.target + this.state.name + "/out").set(this.refs.out.value)
+            else {
+                this.setState({ 'out': this.refs.out.value }, () => {
+                    this.sendUpdates()
+                });
+            }
+
 
         }, 700);
-        if (this.props.target.substring(0, this.props.target.indexOf('/')) == "Employees") {
-            this.props.fireDB.child(this.props.empPath + "timeTableStatus").set("custom");
-        }
+
     }
     showWeekendCheckBox() {
         if (this.props.editingMode) {
@@ -125,19 +132,29 @@ class Day extends Component {
     }
     weekend(e) {
         if (e.target.checked) {
-            this.props.fireDB.child(this.props.target + this.state.name).set({ in: "null", out: "null" })
+            this.setState({ in: "null", out: "null" }, () => {
+                this.sendUpdates()
+            })
+
         } else {
-            this.props.fireDB.child(this.props.target + this.state.name).set({ in: "09:00", out: "17:00" })
-        }
-        this.setState({ weekend: e.target.checked });
 
-        if (this.props.target.substring(0, this.props.target.indexOf('/')) == "Employees") {
-            this.props.fireDB.child(this.props.empPath + "timeTableStatus").set("custom");
+            this.setState({ in: "09:00", out: "17:00" }, () => {
+                this.sendUpdates()
+            })
         }
+        this.setState({ weekend: e.target.checked }, () => {
+            this.sendUpdates()
+        });
 
+
+
+    }
+    sendUpdates() {
+        this.props.onUpdate(this.state);
     }
 
     render() {
+
         return (<div>
             <div className="container mb-1">
 

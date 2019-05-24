@@ -20,7 +20,7 @@ class TimeTableWrapper extends Component {
             padding: "3px 30px"
         }
         return (<div>
-            <ul className="nav nav-pills nav-justified mb-3 mt-5 pt-3" id="pills-tab" role="tablist">
+            <ul className="nav nav-pills nav-justified mb-3  pt-3" id="pills-tab" role="tablist">
                 <li className="nav-item">
                     <a className="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-WorkingDays" role="tab" aria-selected="true">Working Days</a>
                 </li>
