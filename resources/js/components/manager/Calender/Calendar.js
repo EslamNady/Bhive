@@ -20,23 +20,40 @@ class Calendar extends Component {
         };
 
         firebase.initializeApp(config);
-        this.state = { fireDB: "" }
+        this.state = { fireDB: "", numOfNewReq: 0 }
+
 
 
     }
     componentWillMount() {
-        this.setState({ fireDB: firebase.database().ref() });
+        this.setState({ fireDB: firebase.database().ref() }, () => {
+            this.state.fireDB.child("ChangeTimetableRequests/unSeenReq").on("value", snap => {
+                var num = snap.val();
+                this.setState({ numOfNewReq: num });
+            });
+        });
+
 
     }
 
+
+    showNumOfReq() {
+
+        if (this.state.numOfNewReq > 0) {
+            return (
+                <strong className="badge badge-danger" style={{ float: 'right' }}>{this.state.numOfNewReq}</strong>
+            )
+        }
+    }
     render() {
+
         const carkenderStyle = {
             backgroundColor: "rgba(220,220,220,0.2)",
             borderRadius: "5px",
             padding: "0px 30px"
         }
 
-        return (<div>
+        return (<div className="pb-4">
             {this.state.name}
             <ul className="nav nav-pills nav-justified mb-3 mt-5 pt-3" id="pills-tab" role="tablist">
                 <li className="nav-item">
@@ -46,7 +63,8 @@ class Calendar extends Component {
                     <a className="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-Holidays" role="tab" aria-selected="false">Holidays</a>
                 </li>
                 <li className="nav-item">
-                    <a className="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-EmployeesWD" role="tab" aria-selected="false">Employees Working days</a>
+                    <a className="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-EmployeesWD" role="tab" aria-selected="false">Change time table req  {this.showNumOfReq()}</a>
+
                 </li>
             </ul>
             <div className="tab-content" id="pills-tabContent">

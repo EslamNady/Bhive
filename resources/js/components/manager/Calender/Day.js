@@ -38,14 +38,20 @@ class Day extends Component {
     input() {
 
         if (!this.state.weekend) {
-            return (<React.Fragment>
-                <input className="form-control" onChange={this.changeIN} ref="in" value={this.state.in} type="time" />
-                <input className="form-control" onChange={this.changeOut} ref="out" value={this.state.out} type="time" />
-            </React.Fragment>)
+            if (this.props.EditingMode) {
+                return (<React.Fragment>
+                    <input className="form-control" onChange={this.changeIN} ref="in" value={this.state.in} type="time" />
+                    <input className="form-control" onChange={this.changeOut} ref="out" value={this.state.out} type="time" />
+                </React.Fragment>)
+            } else {
+                return (<React.Fragment>
+                    <input className="form-control" onChange={this.changeIN} ref="in" value={this.state.in} disabled type="time" />
+                    <input className="form-control" onChange={this.changeOut} ref="out" value={this.state.out} disabled type="time" />
+                </React.Fragment>)
+            }
         } else {
             return (<React.Fragment>
                 <input className="form-control text-center" onChange={console.log()} value={"Weekend"} type="text" disabled />
-                {/* <input className="form-control" onChange={console.log("a dah")} value={this.state.out} type="time" disabled /> */}
             </React.Fragment>)
         }
     }
@@ -81,9 +87,9 @@ class Day extends Component {
 
         }, 700);
 
-        if (this.props.target.substring(0, this.props.target.indexOf('/')) == "Employees") {
-            this.props.fireDB.child(this.props.empPath + "timeTableStatus").set("custom");
-        }
+        // if (this.props.target.substring(0, this.props.target.indexOf('/')) == "Employees") {
+        //     this.props.fireDB.child(this.props.empPath + "timeTableStatus").set("custom");
+        // }
     }
     changeOut() {
 
@@ -101,9 +107,9 @@ class Day extends Component {
                 this.props.fireDB.child(this.props.target + this.state.name + "/out").set(this.refs.out.value)
 
         }, 700);
-        if (this.props.target.substring(0, this.props.target.indexOf('/')) == "Employees") {
-            this.props.fireDB.child(this.props.empPath + "timeTableStatus").set("custom");
-        }
+        // if (this.props.target.substring(0, this.props.target.indexOf('/')) == "Employees") {
+        //     this.props.fireDB.child(this.props.empPath + "timeTableStatus").set("custom");
+        // }
     }
     weekend(e) {
         if (e.target.checked) {
@@ -117,6 +123,13 @@ class Day extends Component {
             this.props.fireDB.child(this.props.empPath + "timeTableStatus").set("custom");
         }
 
+    }
+    showWeekendCheckbox() {
+        if (this.props.EditingMode)
+            return (<React.Fragment>
+                <label className="ml-2">weekend:</label> <input className="ml-1 weekend-checkbox" onChange={this.weekend} checked={this.state.weekend} type="checkbox" />
+            </React.Fragment>
+            );
     }
 
     render() {
@@ -136,7 +149,7 @@ class Day extends Component {
                         </div>
                     </div>
                     <div className="col-1 pt-2 pl-0 text-nowrap">
-                        <label className="ml-2">weekend:</label><input className="ml-1 weekend-checkbox" onChange={this.weekend} checked={this.state.weekend} type="checkbox" />
+                        {this.showWeekendCheckbox()}
                     </div>
                 </div>
             </div>

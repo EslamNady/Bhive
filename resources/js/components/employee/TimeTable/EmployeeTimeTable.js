@@ -25,7 +25,7 @@ class EmployeeTimeTable extends Component {
         }
         else {
 
-            this.props.fireDB.child(`ChangeTimetableRequests/${this.props.empID}`).once("value", snap => {
+            this.props.fireDB.child(`ChangeTimetableRequests/requests/${this.props.empID}`).once("value", snap => {
                 if (snap.exists()) {
                     var days = snap.child('timeTable').val();
                     var status = snap.child('timeTableStatus').val();
@@ -73,7 +73,8 @@ class EmployeeTimeTable extends Component {
         });
     }
     requestTimeTabeChange() {
-        this.props.fireDB.child(`ChangeTimetableRequests/${this.props.empID}`).set({ 'timeTable': this.state.days, 'timeTableStatus': this.state.timeTableStatus, 'seen': false });
+        this.props.fireDB.child(`ChangeTimetableRequests/requests/${this.props.empID}`).set({ 'timeTable': this.state.days, 'timeTableStatus': this.state.timeTableStatus, 'seen': false });
+
     }
     ShowEditBtn() {
         if (this.props.editingMode) {

@@ -58,6 +58,26 @@ class Holidays extends Component {
         }
     }
 
+    showHolidays() {
+        if (!this.isEmpty(this.state.holidays)) {
+            return (
+                <React.Fragment>
+                    {Object.keys(this.state.holidays).map((key, i) => (
+                        <Holiday key={i} date={key} name={this.state.holidays[key]["name"]} fireDB={this.props.fireDB} />
+
+                    ))}
+                </React.Fragment>
+            );
+        }
+    }
+    isEmpty(obj) {
+        for (var key in obj) {
+            if (obj.hasOwnProperty(key))
+                return false;
+        }
+        return true;
+    }
+
     render() {
 
         return (
@@ -91,10 +111,7 @@ class Holidays extends Component {
                                 </div>
                             </li>
                             <div className="pt-1" style={{ maxHeight: "313px", overflowY: "auto" }}>
-                                {Object.keys(this.state.holidays).map((key, i) => (
-                                    <Holiday key={i} date={key} name={this.state.holidays[key]["name"]} fireDB={this.props.fireDB} />
-
-                                ))}
+                                {this.showHolidays()}
                             </div>
                         </ul>
                     </div>

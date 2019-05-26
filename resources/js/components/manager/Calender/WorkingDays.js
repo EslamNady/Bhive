@@ -55,7 +55,7 @@ class WorkingDays extends Component {
 
         return (<div className="py-4">
             {Object.keys(this.state.days).map((key, i) => (
-                <Day key={i} name={key} day={this.state.days[key]} target="TimeTable/" fireDB={this.props.fireDB} />
+                <Day key={i} name={key} EditingMode={true} day={this.state.days[key]} target="TimeTable/" fireDB={this.props.fireDB} />
             ))}
         </div>);
     }

@@ -46,17 +46,3 @@ class TimeTableWrapper extends Component {
 }
 
 export default TimeTableWrapper;
-// {Object.keys(this.state.timeTable).map((key, i) => (
-//     <div key={i} className="row">
-//         <div className="col-2">
-//             {key}
-//         </div>
-//         <div className="col-2">
-//             {this.state.timeTable[key].in}
-//         </div>
-//         <div className="col-2">
-//             {this.state.timeTable[key].out}
-//         </div>
-
-//     </div>
-// ))}
