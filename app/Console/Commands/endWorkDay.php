@@ -52,23 +52,26 @@ class endWorkDay extends Command
         ->withServiceAccount($serviceAccount)
         ->withDatabaseUri('https://bhive-7020b.firebaseio.com/')
         ->create();
+
         $database = $firebase->getDatabase();
         $employees=$database->getReference('Employees')->getValue();
+        
         foreach($employees as $key=>$value){
-            
-            if( array_key_exists($date,$value['attendance']) ){
-                if(!array_key_exists('out',$value['attendance'][$date])){
-                    $database->getReference('Employees/'.$key.'/attendance/'.$date)->getChild("out")->set($time);
-                }
+
+            if( array_key_exists("attendance",$value)&&array_key_exists($date,$value['attendance']) ){
+                if($value['attendance'][$date]['in']!='null'){
+                    end($value['attendance'][$date]['in']);
+                    $inKey=key($value['attendance'][$date]['in']);
+                    if(!array_key_exists('out',$value['attendance'][$date]) || !array_key_exists($inKey,$value['attendance'][$date]['out'])){
+                        $database->getReference('Employees/'.$key.'/attendance/'.$date.'/out')->getChild($inKey."/time")->set($value['attendance'][$date]['in'][$inKey]['time']);
+                    }
+            }
+
             }else{
-                $database->getReference('Employees/'.$key.'/attendance/'.$date)->set([
-                                                                                        'day' => $day,
-                                                                                        'in' => 'null',
-                                                                                          
-                                                                                    ]);
-                $database->getReference('Employees/'.$key.'/attendance/'.$date)->set([
-                                                                                        'out' => 'null',
-                                                                                    ]);
+                
+                $database->getReference('Employees/'.$key.'/attendance/'.$date.'/day')->set(strtolower($day));
+                $database->getReference('Employees/'.$key.'/attendance/'.$date.'/in')->set("null");
+                $database->getReference('Employees/'.$key.'/attendance/'.$date.'/out')->set("null");
             }
         }
     }
