@@ -12,21 +12,27 @@ class FirebaseController extends Controller
     public function signupFirebase(){
         $employee=Session::get('employee');
         $employee=json_decode($employee);
+
         $serviceAccount = ServiceAccount::fromJsonFile(storage_path().'/json/bhive-7020b-firebase-adminsdk-rrhlt-fc9dfba6b6.json');
         $firebase = (new Factory)
         ->withServiceAccount($serviceAccount)
         ->withDatabaseUri('https://bhive-7020b.firebaseio.com/')
         ->create();
         $database = $firebase->getDatabase();
+        
         $timeTable=$database->getReference('TimeTable')->getValue();
         $newEmployee = $database->getReference('Employees')->getChild(preg_replace('/\./', ',', $employee->email))->set([
                                                                 'info'=> [
-                                                                'email' => $employee->email,
-                                                                'first_name'=>$employee->first_name,
-                                                                'last_name'=>$employee->last_name,
-                                                                'title' => $employee->title ],
+                                                                    'email' => $employee->email,
+                                                                    'first_name'=>$employee->first_name,
+                                                                    'last_name'=>$employee->last_name,
+                                                                    'title' => $employee->title ,
+                                                                    'totalScore'=>0,
+                                                                ],
                                                                 'attendanceScore'=> 0,
+                                                                'tasksScore'=>0,
                                                                 'working_days_num'=> 0,
+                                                                'tasks_num'=>0,
                                                                 'lastDayScore'=>0,
                                                                 'attended_days_num' => 0,
                                                                 'timeTableStatus'=>'default',

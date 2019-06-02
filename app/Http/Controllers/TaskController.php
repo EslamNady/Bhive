@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Employee;
+
+use Kreait\Firebase;
+use Kreait\Firebase\Factory;
+use Kreait\Firebase\ServiceAccount;
+use Kreait\Firebase\Database;
 
 class TaskController extends Controller
 {
@@ -41,10 +47,36 @@ class TaskController extends Controller
                 $feedbackScore/=-1.75;
         }
         \DB::table('activity_timeline')->where('id', $submissionID)->update(array('feedback_score'=>$feedbackScore,'gave_feedback'=> true));
+        $submission=\DB::table('activity_timeline')->where('id', $submissionID)->first();
+        
+
+        $Employee=Employee::find($submission->employee_id);
+        $this->scoreEmployeeTasks($Employee->email,$submission->time_score,$feedbackScore);
+
 
         return "1";
         
+    }
 
+    public function scoreEmployeeTasks($email,$time,$feedback){
+        
+        $email=preg_replace('/\./', ',', $email);
 
+        $serviceAccount = ServiceAccount::fromJsonFile(storage_path().'/json/bhive-7020b-firebase-adminsdk-rrhlt-fc9dfba6b6.json');
+        $firebase = (new Factory)
+        ->withServiceAccount($serviceAccount)
+        ->withDatabaseUri('https://bhive-7020b.firebaseio.com/')
+        ->create();
+        $database = $firebase->getDatabase();
+        $prevScore=$database->getReference('Employees')->getChild($email)->getChild('tasksScore')->getValue();
+        $task_num=$database->getReference('Employees')->getChild($email)->getChild('tasks_num')->getValue();
+        $prevScore*=$task_num;
+        $task_num+=1;
+        $prevScore=($prevScore+$time+$feedback)/($task_num);
+        $database->getReference('Employees')->getChild($email)->getChild('tasksScore')->set($prevScore);
+        $database->getReference('Employees')->getChild($email)->getChild('tasks_num')->set($task_num);
+        
+
+        
     }
 }
