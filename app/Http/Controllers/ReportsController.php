@@ -46,6 +46,9 @@ class ReportsController extends Controller
             $attendanceScore=$newEmployee->getChild('attendanceScore')->getValue();
             $timeTable=$newEmployee->getChild('timeTable')->getValue();
             
+            //skills
+
+            $skills=$employee->skills;
             //tasks 
             $tasks=$employee->tasks;
             $tasks=TasksResource::collection($tasks);
@@ -76,6 +79,7 @@ class ReportsController extends Controller
                 "tasksScore"=>$tasksScore,
                 'attendanceScore'=>$attendanceScore,
                 "timeTable"=>$timeTable,
+                "skills" => $skills,
                 "tasks"=> $sorted,
                 "taskDetails"=> $taskDetails,
                 "totalHours"=> $totalHours,
@@ -85,12 +89,11 @@ class ReportsController extends Controller
         }
         else{
             $project=Project::find($request->id);
-            $tasks=$project->tasks;
-            $tasks=TaskDetailsResource::collection($tasks);
+            $tasks=$project->task;
+            $tasks=TasksResource::collection($tasks);
             return [
                 "project"=>new ProjectsResource($project),
                 "taskDetails"=>$tasks,
-
             ];
         }
     }

@@ -21,7 +21,7 @@ class ProjectsResource extends JsonResource
             'endDate' => $this->endDate,
             'manager_id'=>$this->manager_id,
             'manager_name'=>User::find($this->manager_id)->name,
-            
+            'description' => $this->description,
         ];
     }
 }

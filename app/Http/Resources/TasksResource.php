@@ -25,6 +25,7 @@ class TasksResource extends JsonResource
             'slack' => $this->slack,
             'project_id'=>$this->project_id,
             'project_name' => Project::find($this->project_id)->name,
+            'employees' => $this->employees,
         ];
     }
 }
