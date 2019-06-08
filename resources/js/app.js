@@ -20,5 +20,5 @@ require("./components/employee/Main");
 require("./components/manager/Main");
 require("./components/SubmitTask/SubmitTaskMain");
 require("./components/manager/QRGenerator");
-
+require("./components/manager/Reports/Main");
 

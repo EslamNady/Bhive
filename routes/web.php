@@ -80,3 +80,9 @@ Route::prefix('skills')->group(function(){
 
 
 Route::get('/getCurrentTime','AttendanceController@getCurrentTime');
+Route::prefix('reports')->group(function(){
+    Route::get('/','ReportsController@index');
+    Route::get('/getAllData','ReportsController@getAllData');
+    Route::post('/content','ReportsController@getContent');
+});
+

@@ -24,6 +24,7 @@ class ManagerProfile extends Component {
                         <div className="col-6 pr-5">
                             <div>
                                 <a className="btn btn-success" href="/project/create">Create a new project</a>
+                                <a className="btn btn-danger" href="/reports">Reports</a>
                             </div>
                             <div>
                                 <SystemSkills />
@@ -43,9 +44,9 @@ class ManagerProfile extends Component {
                         </div>
                     </div>
                     <div >
-
                         <Calendar />
                     </div>
+
 
                 </div>
 

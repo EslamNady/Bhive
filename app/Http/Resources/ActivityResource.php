@@ -25,6 +25,7 @@ class ActivityResource extends JsonResource
             'end_date' => $this->endDate->toDateString(),
             'project_name' => Project::find($this->project_id)->name,
             'is_dead' => $this->is_dead,
+            
         ];
     }
 }

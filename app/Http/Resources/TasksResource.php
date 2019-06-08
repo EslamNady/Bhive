@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use App\Project;
 class TasksResource extends JsonResource
 {
     /**
@@ -23,6 +23,8 @@ class TasksResource extends JsonResource
             'progress'=>$this->progress,
             'predecessors' =>TasksResource::collection($this->predecessor),
             'slack' => $this->slack,
+            'project_id'=>$this->project_id,
+            'project_name' => Project::find($this->project_id)->name,
         ];
     }
 }

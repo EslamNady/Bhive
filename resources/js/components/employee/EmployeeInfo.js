@@ -6,6 +6,7 @@ class EmployeeInfo extends Component {
         this.state = {
             empKey: "",
             timeTable: '',
+            score: 0,
         }
     }
     componentWillMount() {
@@ -17,9 +18,22 @@ class EmployeeInfo extends Component {
             this.setState({
                 timeTable: snap.val(),
             })
+
             // console.log("Employees/" + this.state.empKey + "/timeTable")
         });
+
+        this.props.fireDB.child("Employees/" + empKey + "/totalScore").on('value', snap => {
+            var timeTable = snap.val()
+            this.setState({
+                score: snap.val(),
+            })
+
+            // console.log("Employees/" + this.state.empKey + "/timeTable")
+        });
+
+
     }
+
     render() {
         return (
             <div className="employee-info  ">
@@ -28,7 +42,7 @@ class EmployeeInfo extends Component {
                         <div className="col-6">
                             <div className="employee-name">{this.props.name}</div>
                             <div className="employee-title ml-2 my-2"><label className="text-muted"><small>Title/</small></label> {this.props.title}</div>
-                            <div className="score ml-2 my-2"><label className="text-muted"><small>Score:</small></label> {this.props.score}</div>
+                            <div className="score ml-2 my-2"><label className="text-muted"><small>Score:</small></label> {this.state.score.toFixed(2)}</div>
                         </div>
 
 

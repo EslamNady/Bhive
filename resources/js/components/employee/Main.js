@@ -40,7 +40,7 @@ class EmployeeProfile extends Component {
     render() {
         return (
             <div className="employee-wrapper mt-2">
-                <EmployeeInfo email={this.state.email} name={this.state.first_name + " " + this.state.last_name} id={this.state.id} title={this.state.title} score={this.state.score} fireDB={this.state.fireDB}></EmployeeInfo>
+                <EmployeeInfo email={this.state.email} name={this.state.first_name + " " + this.state.last_name} id={this.state.id} title={this.state.title} fireDB={this.state.fireDB}></EmployeeInfo>
                 <div className="px-5 my-4">
                     <h4 className="ml-5">Skills</h4>
                     <SkillsWrapper employeeID={this.state.id}></SkillsWrapper>
