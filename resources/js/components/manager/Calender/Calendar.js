@@ -10,28 +10,19 @@ import EmployeesWorkingDays from './EmployeesWorkingDays'
 class Calendar extends Component {
     constructor(props) {
         super(props);
-        var config = {
-            apiKey: "AIzaSyAdoW2AdbGL1ml7v2PZ7d4Urt3LPPQ1dx8",
-            authDomain: "bhive-7020b.firebaseapp.com",
-            databaseURL: "https://bhive-7020b.firebaseio.com",
-            projectId: "bhive-7020b",
-            storageBucket: "bhive-7020b.appspot.com",
-            messagingSenderId: "889361602878"
-        };
 
-        firebase.initializeApp(config);
-        this.state = { fireDB: "", numOfNewReq: 0 }
+        this.state = { numOfNewReq: 0 }
 
 
 
     }
     componentWillMount() {
-        this.setState({ fireDB: firebase.database().ref() }, () => {
-            this.state.fireDB.child("ChangeTimetableRequests/unSeenReq").on("value", snap => {
-                var num = snap.val();
-                this.setState({ numOfNewReq: num });
-            });
+
+        this.props.fireDB.child("ChangeTimetableRequests/unSeenReq").on("value", snap => {
+            var num = snap.val();
+            this.setState({ numOfNewReq: num });
         });
+
 
 
     }
@@ -68,9 +59,9 @@ class Calendar extends Component {
                 </li>
             </ul>
             <div className="tab-content" id="pills-tabContent">
-                <div className="tab-pane fade show active" id="pills-WorkingDays" role="tabpanel" aria-labelledby="pills-home-tab"><div style={carkenderStyle}> <WorkingDays fireDB={this.state.fireDB} /></div></div>
-                <div className="tab-pane fade" id="pills-Holidays" role="tabpanel" aria-labelledby="pills-profile-tab"><div style={carkenderStyle}> <Holidays fireDB={this.state.fireDB} /> </div></div>
-                <div className="tab-pane fade" id="pills-EmployeesWD" role="tabpanel" aria-labelledby="pills-contact-tab"><div style={carkenderStyle}> <EmployeesWorkingDays fireDB={this.state.fireDB} /></div></div>
+                <div className="tab-pane fade show active" id="pills-WorkingDays" role="tabpanel" aria-labelledby="pills-home-tab"><div style={carkenderStyle}> <WorkingDays fireDB={this.props.fireDB} /></div></div>
+                <div className="tab-pane fade" id="pills-Holidays" role="tabpanel" aria-labelledby="pills-profile-tab"><div style={carkenderStyle}> <Holidays fireDB={this.props.fireDB} /> </div></div>
+                <div className="tab-pane fade" id="pills-EmployeesWD" role="tabpanel" aria-labelledby="pills-contact-tab"><div style={carkenderStyle}> <EmployeesWorkingDays fireDB={this.props.fireDB} /></div></div>
             </div>
 
         </div>);

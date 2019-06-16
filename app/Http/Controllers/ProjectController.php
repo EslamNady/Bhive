@@ -120,7 +120,7 @@ class ProjectController extends Controller
         //calculations
         $tasks=Task::where('project_id',$project_id)->get();
         $predecessors=[];
-        $successors=[];;
+        $successors=[];
         foreach($tasks as $task){
             if($task->predecessor->count()===0){
                 array_push($predecessors,$task);
@@ -213,6 +213,10 @@ class ProjectController extends Controller
                         break;
                     }
                 }
+
+                //lw fe agaza
+
+                
                 $found=false;
                 if(!$busy){
                     $empSkills=$employee->skills;

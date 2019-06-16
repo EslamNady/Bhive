@@ -4,6 +4,7 @@ import EmployeeInfo from "./EmployeeInfo";
 import SkillsWrapper from './SkillsWrapper';
 import Tasks from "./Tasks";
 import TimeTableWrapper from "./TimeTable/TimeTableWrapper"
+import VacationRequest from './VacaionRequest/main'
 import * as firebase from 'firebase';
 
 class EmployeeProfile extends Component {
@@ -51,6 +52,9 @@ class EmployeeProfile extends Component {
                 </div>
                 <div className="container">
                     <hr />
+                </div>
+                <div className='px-5'>
+                    <VacationRequest email={this.state.email} fireDB={this.state.fireDB} />
                 </div>
                 <div className="mb-4">
                     <h3 className="text-center my-3">Tasks</h3>

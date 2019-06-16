@@ -86,3 +86,6 @@ Route::prefix('reports')->group(function(){
     Route::post('/content','ReportsController@getContent');
 });
 
+//vacation
+Route::post('/vacationRequest/accept','VacationController@accept');
+

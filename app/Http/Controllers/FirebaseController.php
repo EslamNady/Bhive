@@ -27,12 +27,13 @@ class FirebaseController extends Controller
                                                                     'first_name'=>$employee->first_name,
                                                                     'last_name'=>$employee->last_name,
                                                                     'title' => $employee->title ,
-                                                                    'totalScore'=>0,
+                                                                    
                                                                 ],
                                                                 'attendanceScore'=> 0,
                                                                 'tasksScore'=>0,
                                                                 'working_days_num'=> 0,
                                                                 'tasks_num'=>0,
+                                                                'totalScore'=>0,
                                                                 'lastDayScore'=>0,
                                                                 'attended_days_num' => 0,
                                                                 'timeTableStatus'=>'default',
@@ -40,6 +41,7 @@ class FirebaseController extends Controller
                                                                 'password' => $employee->password,
 
                                                                 ]);
+                                                
         // //$newPost->getKey(); // => -KVr5eu8gcTv7_AHb-3-
         //$newPost->getUri(); // => https://my-project.firebaseio.com/blog/posts/-KVr5eu8gcTv7_AHb-3-
         //$newPost->getChild('title')->set('Changed post title');

@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+import * as firebase from "firebase";
 import SystemSkills from "./SystemSkills";
 import ProjectListView from './ProjectListView';
 import Calendar from "./Calender/Calendar";
+import VacationRequest from './vacationRequests/main'
 
 // import SubmittedTasks from './SubmittedTasks';
 class ManagerProfile extends Component {
@@ -12,7 +14,21 @@ class ManagerProfile extends Component {
             id: parseInt(document.getElementById("ManagerProfile").getAttribute("managerID")),
             name: document.getElementById("ManagerProfile").getAttribute("name"),
             systemSkills: [],
+            fireDB: "",
         };
+        var config = {
+            apiKey: "AIzaSyAdoW2AdbGL1ml7v2PZ7d4Urt3LPPQ1dx8",
+            authDomain: "bhive-7020b.firebaseapp.com",
+            databaseURL: "https://bhive-7020b.firebaseio.com",
+            projectId: "bhive-7020b",
+            storageBucket: "bhive-7020b.appspot.com",
+            messagingSenderId: "889361602878"
+        };
+
+        firebase.initializeApp(config);
+    }
+    componentWillMount() {
+        this.setState({ fireDB: firebase.database().ref() });
     }
 
 
@@ -29,6 +45,10 @@ class ManagerProfile extends Component {
                             <div>
                                 <SystemSkills />
                             </div>
+                            <div>
+                                <VacationRequest fireDB={this.state.fireDB} />
+                            </div>
+
 
                         </div>
                         <div className="col-6">
@@ -44,7 +64,7 @@ class ManagerProfile extends Component {
                         </div>
                     </div>
                     <div >
-                        <Calendar />
+                        <Calendar fireDB={this.state.fireDB} />
                     </div>
 
 
