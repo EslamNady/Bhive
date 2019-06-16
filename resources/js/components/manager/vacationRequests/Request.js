@@ -84,7 +84,7 @@ class Request extends Component {
         }
         this.props.fireDB.child(`Employees/${this.props.empID}/vacations/${s}/reason`).set('none');
 
-
+        this.props.fireDB.child(`vacationRequests/requests/${this.props.empID}`).remove();
     }
 
     rejectRequest() {

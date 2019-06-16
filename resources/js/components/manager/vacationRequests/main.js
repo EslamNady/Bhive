@@ -19,11 +19,14 @@ class VacationRequests extends Component {
     showRequests() {
         if (!this.isEmpty(this.state.requests)) {
             return (
-                <ul className="list-group">
-                    {Object.keys(this.state.requests).map((key, i) => (
-                        <Request key={i} requestInfo={this.state.requests[key]} empID={key} fireDB={this.props.fireDB} />
-                    ))}
-                </ul>
+                <React.Fragment>
+                    <h4>Vacation requests</h4>
+                    <ul className="list-group">
+                        {Object.keys(this.state.requests).map((key, i) => (
+                            <Request key={i} requestInfo={this.state.requests[key]} empID={key} fireDB={this.props.fireDB} />
+                        ))}
+                    </ul>
+                </React.Fragment>
             );
         }
     }

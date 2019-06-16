@@ -21,11 +21,23 @@ class VacationRequest extends Component {
 
     render() {
         return (<div>
+            <h4>Vacation request</h4>
             <div className='vacation-form'>
-                <input className='form-control' type='date' ref="start" />
-                <input className='form-control' type='date' ref="end" />
-                <button onClick={this.sendRequest}>Send</button>
+                <div className="row">
+                    <div className="col-6">
+                        <span>From: </span>
+                        <input className='form-control' type='date' ref="start" />
+                    </div>
+                    <div className="col-6">
+                        <span>To: </span>
+                        <input className='form-control' type='date' ref="end" />
+                    </div>
+                </div>
+                <div className="text-center mt-2">
+                    <button className="btn btn-primary mt-2" onClick={this.sendRequest}>Send</button>
+                </div>
             </div>
+            <hr />
         </div>);
     }
 }
