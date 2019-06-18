@@ -28,7 +28,7 @@ class OutgoingTasks extends Component {
                 </div>);
         } else {
             return (
-                <div className="end-date">
+                <div className="end-date text-success">
                     <small className="text-muted">Deadline: </small>
                     {task.end_date}
                 </div>

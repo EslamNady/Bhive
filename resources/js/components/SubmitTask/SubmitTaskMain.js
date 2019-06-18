@@ -52,17 +52,21 @@ class SubmitTaskMain extends Component {
     render() {
         return (
             <div className="submit-wrapper">
-                <div className="container">
-                    <div className="task-info">
-                        <div className="task-name">{this.state.task.name}</div>
-                        <div className="task-startdate">{this.state.task.startDate.substring(0, this.state.task.startDate.indexOf(" "))}</div>
-                        <div className="task-enddate">{this.state.task.endDate.substring(0, this.state.task.endDate.indexOf(" "))}</div>
-                    </div>
-                    <div>
-                        <div className="form-group" >
-                            <label>Link:</label><input ref="link" className="form-control" type="url" placeholder="Repositry link" />
-                            <label> Comment:</label><textarea ref="comment" className="form-control" placeholder="Any comment"></textarea>
-                            <button onClick={this.submit} className="btn btn-block btn-success mt-2" >Submit Task</button>
+                <div className="container" style={{ height: '100vh', width: '100%' }}>
+                    <div style={{ position: 'relative', height: '100%', width: '100%' }}>
+                        <div className="p-2" style={{ position: 'absolute', width: "100%", background: 'rgba(255,255,255,0.3)', border: '1px solid rgba(0,0,0,0.2)', boxShadow: ' 0px 11px 22px -10px rgba(0,0,0,0.75)', borderRadius: '3px', top: "50%", transform: "translateY(-50%)" }}>
+                            <div className="task-info">
+                                <div className="task-name h5 text-center font-weight-bold ">{this.state.task.name}</div>
+                                <div className="task-startdate">Starts at: <span className="text-muted">{this.state.task.startDate.substring(0, this.state.task.startDate.indexOf(" "))}</span></div>
+                                <div className="task-enddate">Deadline: <span className="text-muted">{this.state.task.endDate.substring(0, this.state.task.endDate.indexOf(" "))}</span></div>
+                            </div>
+                            <div>
+                                <div className="form-group mt-1" >
+                                    <label>Link:</label><input ref="link" className="form-control" type="url" placeholder="Repositry link" />
+                                    <label> Comment:</label><textarea ref="comment" className="form-control" placeholder="Any comment"></textarea>
+                                    <button onClick={this.submit} className="btn btn-block btn-success mt-2" >Submit Task</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -154,8 +154,10 @@ class ReportBody extends Component {
     skills() {
         if (this.state.content.skills.length === 0) {
             return (
-                <div style={{ height: '80px', verticalAlign: 'middle', textAlign: 'center' }}>
-                    No Assigned skills
+                <div className="d-flex justify-content-center align-items-center" style={{ height: '50px', width: "100%" }}>
+                    <p>
+                        No Assigned skills
+                    </p>
                 </div>
             );
         }
@@ -174,7 +176,8 @@ class ReportBody extends Component {
         }
     }
     render() {
-
+        var d = new Date();
+        var date = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
         if (this.props.info.id === null) {
             return (<div className="d-flex justify-content-center align-items-center " style={{ height: "100%" }}>
                 <p>No seleted Report</p>
@@ -185,7 +188,7 @@ class ReportBody extends Component {
 
                     return (
                         <div style={{ position: "relative", height: "100%" }} >
-                            <div className="text-right" style={{ position: 'absolute', bottom: "0", height: "55px", width: "100%", backgroundColor: "rgba(0,0,0,0.4)" }}>
+                            <div className="text-right" style={{ position: 'absolute', bottom: "0", height: "55px", width: "100%", backgroundColor: "rgba(0,0,0,0.4)", zIndex: 2 }}>
                                 <button className="btn btn-danger btn-small mr-4 my-2" onClick={this.downloadPDF}>Download Report</button>
                             </div>
                             <div className="report-body p-3 " style={{ height: '100%', overflowY: 'auto' }}>
@@ -199,6 +202,15 @@ class ReportBody extends Component {
                                             </div>
                                             <hr />
                                             <div className="page-body py-2">
+                                                <div style={{ position: 'relative', bottom: '0px' }} className="page-footer pb-2 px-3">
+
+                                                    <div>
+                                                        <span className='font-weight-bold'>Reported at: </span>
+                                                        <small>{date}</small>
+                                                    </div>
+
+                                                </div>
+                                                <hr />
                                                 <div className="personal-info">
                                                     <h5 className="pl-3 mb-2">Personal information</h5>
                                                     <div className=" pl-5">
@@ -207,7 +219,7 @@ class ReportBody extends Component {
                                                                 <div><small className="text-muted">Title: </small>{`${this.state.content.personalInfo.title}`}</div>
                                                                 <div><small className="text-muted">Name: </small>{`${this.state.content.personalInfo.first_name} ${this.state.content.personalInfo.last_name}`}</div>
                                                                 <div>
-                                                                    <small className="text-muted">score: </small>{`${this.state.content.score.toFixed(2)}`}
+                                                                    <small className="text-muted">score: </small>{`${this.state.content.score}`}
                                                                     <small className="d-inline-block ml-2 text-muted" >{`(Attedance: ${this.state.content.attendanceScore.toFixed(2)}  Tasks: ${this.state.content.tasksScore.toFixed(2)})`}</small>
                                                                 </div>
                                                             </div>
@@ -316,7 +328,7 @@ class ReportBody extends Component {
                 } else if (this.props.info.type === 'project') {
                     return (
                         <div style={{ position: "relative", height: "100%" }} >
-                            <div className="text-right" style={{ position: 'absolute', bottom: "0", height: "55px", width: "100%", backgroundColor: "rgba(0,0,0,0.4)" }}>
+                            <div className="text-right" style={{ position: 'absolute', bottom: "0", height: "55px", width: "100%", backgroundColor: "rgba(0,0,0,0.4)", zIndex: 2 }}>
                                 <button className="btn btn-danger btn-small mr-4 my-2" onClick={this.downloadPDF}>Download Report</button>
                             </div>
                             <div className="report-body p-3 " style={{ height: '100%', overflowY: 'auto' }}>
@@ -330,6 +342,15 @@ class ReportBody extends Component {
                                             </div>
                                             <hr />
                                             <div className="page-body py-2">
+                                                <div style={{ position: 'relative', bottom: '0px' }} className="page-footer pb-2 px-3">
+
+                                                    <div>
+                                                        <span className='font-weight-bold'>Reported at: </span>
+                                                        <small>{date}</small>
+                                                    </div>
+
+                                                </div>
+                                                <hr />
                                                 <div className="Project-info">
                                                     <h5 className="pl-3 mb-2">Project information</h5>
                                                     <div className=" pl-5">
@@ -415,7 +436,9 @@ class ReportBody extends Component {
                                             <div className="page-body py-2">
                                                 <div className="project-gantt">
                                                     <h5 className="pl-3 mb-2">Gantt chart</h5>
-                                                    <Crm projectTasks={this.state.content.taskDetails} />
+                                                    <div style={{ zIndex: 1 }}>
+                                                        <Crm projectTasks={this.state.content.taskDetails} />
+                                                    </div>
 
                                                 </div>
                                             </div>

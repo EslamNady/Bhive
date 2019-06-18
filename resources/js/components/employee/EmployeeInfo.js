@@ -42,7 +42,7 @@ class EmployeeInfo extends Component {
                         <div className="col-6">
                             <div className="employee-name">{this.props.name}</div>
                             <div className="employee-title ml-2 my-2"><label className="text-muted"><small>Title/</small></label> {this.props.title}</div>
-                            <div className="score ml-2 my-2"><label className="text-muted"><small>Score:</small></label> {this.state.score.toFixed(2)}</div>
+                            <div className="score ml-2 my-2"><label className="text-muted"><small>Score:</small></label> {this.state.score}</div>
                         </div>
 
 
