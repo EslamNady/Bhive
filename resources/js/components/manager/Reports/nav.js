@@ -23,7 +23,9 @@ class NavColumn extends Component {
                         backgroundPosition: "left center",
 
                     }} >
-                        <img src="/images/logo 1.png" style={{ width: '60%' }} />
+                        <a href="http://localhost:8000/home" style={{ display: "block", width: "100%" }}>
+                            <img src="/images/logo 1.png" style={{ width: '60%' }} />
+                        </a>
                     </div>
                 </div>
                 <hr style={{ margin: 0 }} />
