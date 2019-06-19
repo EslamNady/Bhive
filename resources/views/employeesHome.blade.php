@@ -1,7 +1,10 @@
 
+         
         @extends('layouts.app')
-
         @section('content')
+        <head>
+          <title>{{ $employee->first_name }} {{ $employee->last_name }}</title>
+        </head>
         <div>
           @if(session()->has('message'))
                <div class="alert alert-success">

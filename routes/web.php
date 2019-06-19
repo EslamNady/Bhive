@@ -89,3 +89,9 @@ Route::prefix('reports')->group(function(){
 //vacation
 Route::post('/vacationRequest/accept','VacationController@accept');
 
+
+//substitute Resources
+Route::get('/substituteResources','ProjectController@substituteResources');
+
+//get all projects sorted by start date
+Route::get('/getSortedProjects','ProjectController@getProjectsSortedByDate');

@@ -7,6 +7,7 @@ class SubmittedTasksList extends Component {
         this.state = {
             subtasks: [],
         }
+        this.showTasks = this.showTasks.bind(this);
     }
 
     componentWillMount() {
@@ -40,6 +41,27 @@ class SubmittedTasksList extends Component {
 
 
     }
+    showTasks() {
+        if (this.state.subtasks.length !== 0) {
+            return (
+                <React.Fragment>
+                    {this.state.subtasks.map((task, i) => (
+                        <div key={i} className="col-3">
+                            <SubmittedTask key={i} task={task} />
+                        </div>
+                    ))}
+                </React.Fragment>
+            );
+
+        }
+        else {
+            return (
+                <div className="d-flex justify-content-center align-items-center" style={{ height: "100%", width: '100%' }}>
+                    <h4 className="text-white">No Submitted Tasks</h4>
+                </div>
+            );
+        }
+    }
 
     render() {
         // console.log(this.state.subtasks)
@@ -48,13 +70,9 @@ class SubmittedTasksList extends Component {
                 <h4 className="pl-5 mb-4">Submissions</h4>
                 <div className="blue-bg ">
                     <div className="doted-bg">
-                        <div className="subTasksWrapper">
-                            <div className="row">
-                                {this.state.subtasks.map((task, i) => (
-                                    <div key={i} className="col-3">
-                                        <SubmittedTask key={i} task={task} />
-                                    </div>
-                                ))}
+                        <div className="subTasksWrapper" style={{ height: "100%" }}>
+                            <div className="row" style={{ height: "100%" }} >
+                                {this.showTasks()}
                             </div>
                         </div>
                     </div>

@@ -54,7 +54,7 @@ class Calendar extends Component {
                     <a className="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-Holidays" role="tab" aria-selected="false">Holidays</a>
                 </li>
                 <li className="nav-item">
-                    <a className="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-EmployeesWD" role="tab" aria-selected="false">Change time table req  {this.showNumOfReq()}</a>
+                    <a className="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-EmployeesWD" role="tab" aria-selected="false">Change Time Table Requests  {this.showNumOfReq()}</a>
 
                 </li>
             </ul>

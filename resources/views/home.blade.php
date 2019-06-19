@@ -3,6 +3,7 @@
 @section('content')
 <head>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet"> 
+    <title>Manager |{{ $manager->name }}</title>
 </head>
 <div >
         @if(session()->has('message'))

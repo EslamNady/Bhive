@@ -14,6 +14,10 @@ use App\Project;
 use App\Task;
 use App\Skill;
 use App\Employee;
+use Kreait\Firebase;
+use Kreait\Firebase\Factory;
+use Kreait\Firebase\ServiceAccount;
+use Kreait\Firebase\Database;
 use Auth;
 class ProjectController extends Controller
 {
@@ -53,6 +57,15 @@ class ProjectController extends Controller
 
 
     public function createNewProject(Request $request){
+
+        $serviceAccount = ServiceAccount::fromJsonFile(storage_path().'/json/bhive-7020b-firebase-adminsdk-rrhlt-fc9dfba6b6.json');
+        $firebase = (new Factory)
+        ->withServiceAccount($serviceAccount)
+        ->withDatabaseUri('https://bhive-7020b.firebaseio.com/')
+        ->create();
+        $database = $firebase->getDatabase();
+
+
         $data=$request->all();
         $newproject =new Project;
         $newproject->name= $request->get('name');
@@ -203,6 +216,22 @@ class ProjectController extends Controller
                 $activities=$employee->tasks;
                 $busy=false;
 
+                $vacations = $database->getReference('Employees')->getChild(preg_replace('/\./', ',', $employee->email))->getChild('vacations')->getValue();
+
+                //lw fe agaza
+
+                if($vacations!==null){
+                    foreach($vacations as $key => $value) {
+                        
+                        if($assignedTask->startDate<=Carbon::parse($key)&&Carbon::parse($key)<=$assignedTask->endDate)
+                            {
+                                $busy=true;
+                                break;
+                            }
+                    }
+                }
+                // print_r($vacations);
+
                 foreach($activities as $activity){
 
                     $activityTask=Task::where('id',$activity->id)->first();
@@ -214,8 +243,8 @@ class ProjectController extends Controller
                     }
                 }
 
-                //lw fe agaza
 
+                
                 
                 $found=false;
                 if(!$busy){
@@ -303,5 +332,31 @@ class ProjectController extends Controller
         $tasks=Task::where('project_id',$id)->with('employees')->get();
         
         return SubmittedTasksResource::collection($tasks);
+    }
+
+    // SUBSITUTE RESOURCE function
+
+public function substituteResources(Request $request){
+        $oldEmpID=$request->oldEmpID;
+        $taskID=$request->taskID;
+        $empID=$request->empID;
+
+        // $oldEmpID=3;
+        // $empID=2;
+        // $taskID=94;
+
+        $task=Task::find($taskID);
+        $oldEmployee=Employee::find($oldEmpID);
+        $newEmployee=Employee::find($empID);
+        
+        $oldEmployee->tasks()->detach($taskID);
+        $newEmployee->tasks()->attach($taskID);
+        
+        return redirect()->back()->with('message',$newEmployee->first_name." has taken Task : ".$task->name." instead of :". $oldEmployee->first_name);
+    }
+
+    public function getProjectsSortedByDate(){
+        $projects=Project::orderBy('startDate','DESC')->get();
+        return projectsResource::collection($projects);
     }
 }

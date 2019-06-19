@@ -35,13 +35,15 @@ class ManagerProfile extends Component {
     render() {
         return (
             <div className="manager-main">
-                <div className="container pt-4 ">
+                <div className="container pt-4">
+                    <a className="btn btn-success" href="/project/create">Create a new project</a>
+                    <a className="btn btn-danger ml-1" href="/reports">Generate Reports</a>
+                    <a className="btn btn-primary  ml-1" href="/attendance-QR">Generate attendance QR</a>
+                </div>
+                <div className="container pt-2 ">
                     <div className="row ">
                         <div className="col-6 pr-5">
-                            <div>
-                                <a className="btn btn-success" href="/project/create">Create a new project</a>
-                                <a className="btn btn-danger" href="/reports">Reports</a>
-                            </div>
+
                             <div>
                                 <SystemSkills />
                             </div>
@@ -53,7 +55,7 @@ class ManagerProfile extends Component {
                         </div>
                         <div className="col-6">
                             <div className="mb-3 text-right">
-                                <a className="btn btn-primary  " href="/attendance-QR">Generate attendance QR</a>
+
                             </div>
                             <div className="projectList-wrapper">
                                 <div className="bg-wrapper">

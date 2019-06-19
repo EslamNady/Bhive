@@ -9,7 +9,7 @@ class ProjectItem extends Component {
     render() {
         return (
             <div className="projectContainer">
-                <h4>{this.props.projectObj.name}</h4>
+                <h5>{this.props.projectObj.name}</h5>
             </div>
         );
     }

@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet"> 
-    <title>Document</title>
+    <title>Project|{{$project->name}}</title>
 </head>
 <body>
     <div id="ProjectView" projectID="{{ $project->id }}" projectName="{{$project->name}}" projectDescription="{{$project->description}}">

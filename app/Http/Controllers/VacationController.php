@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Employee;
 use Illuminate\Http\Request;
+use Kreait\Firebase;
+use Kreait\Firebase\Factory;
+use Kreait\Firebase\ServiceAccount;
+use Kreait\Firebase\Database;
 use Datetime;
 use Carbon\Carbon;
 
@@ -11,12 +15,49 @@ class VacationController extends Controller
 {
     public function accept(Request $request){
         
+        $serviceAccount = ServiceAccount::fromJsonFile(storage_path().'/json/bhive-7020b-firebase-adminsdk-rrhlt-fc9dfba6b6.json');
+        $firebase = (new Factory)
+        ->withServiceAccount($serviceAccount)
+        ->withDatabaseUri('https://bhive-7020b.firebaseio.com/')
+        ->create();
+        $database = $firebase->getDatabase();
+
         $empEmail=preg_replace('/\,/', '.', $request->empID);
         $employee=Employee::where('email',$empEmail)->first();
         $start= Carbon::parse($request->start);
         $end= Carbon::parse($request->end);
+        $all_dates = array();
+        $assignedTasks=array();
+        $allTasks=$employee->tasks;
+        foreach($allTasks as $taskk){
+            while ($start->lte($end)){
+                $all_dates[] = $start->toDateString();
+                $task=$taskk->where('startDate','<=',$start->toDateString())->where('endDate','>=',$start->toDateString())->first();
+                if($task){      
+                    array_push($assignedTasks,$task->id);
+                    break;
+                }
+            }
+            $start->addDay();
+        }
 
-        $assignedTasks=$employee->tasks->where('startDate','>=',$start)->where('endDate','<=',$end);
+	    $vacations = $database->getReference('Employees')->getChild(preg_replace('/\./', ',', $employee->email))->getChild('vacations')->getValue();
+
+        //lw fe agaza
+        print_r($vacations);
+        if($vacations!==null){
+            foreach($vacations as $key => $value) {
+                
+                if($assignedTask->startDate<=Carbon::parse($key)&&Carbon::parse($key)<=$assignedTask->endDate)
+                    {
+                        $busy=true;
+                        break;
+                    }
+            }
+        }
+
+
+
         $employee->tasks()->detach($assignedTasks);
         foreach($assignedTasks as $assignedTask){
             

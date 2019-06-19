@@ -10,7 +10,7 @@ class ProjectListView extends Component {
         }
     }
     componentDidMount() {
-        axios.get('/project/list')
+        axios.get('/getSortedProjects')
             .then(response => {
                 this.setState({
                     projects: response.data.data
@@ -24,7 +24,7 @@ class ProjectListView extends Component {
         return (
             <ul className="list-group projectsList">
                 {this.state.projects.map((project, i) => (
-                    <li key={i} className="list-group-item project-item py-2 mb-4">
+                    <li key={i} className="list-group-item project-item  mb-2">
                         <a href={"/project/view" + project.id} className="d-block"> <ProjectItem projectObj={project}></ProjectItem> </a>
                     </li>
                 ))}

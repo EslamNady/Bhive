@@ -45,24 +45,26 @@ class Request extends Component {
         })
     }
     approveRequest() {
-        // axios({
-        //     method: "post",
-        //     url: "vacationRequest/accept",
-        //     data: {
-        //         empID: this.props.empID,
-        //         start: this.state.start,
-        //         end: this.state.end,
-        //     }
-        // })
-        //     .then(response => {
+        // hena sho8lek
+        axios({
+            method: "post",
+            url: "../vacationRequest/accept",
+            data: {
+                empID: this.props.empID,
+                start: this.state.start,
+                end: this.state.end,
+            }
+        })
+            .then(response => {
 
-        //         // this.props.fireDB.child(`vacationRequests/requests/${this.props.empID}`).remove();
-        //         console.log(response.data);
+                // this.props.fireDB.child(`vacationRequests/requests/${this.props.empID}`).remove();
+                console.log(response.data);
 
-        //     })
-        //     .catch(function (error) {
-        //         console.log(error.response.data);
-        //     });
+            })
+            .catch(function (error) {
+                console.log(error.response.data);
+            });
+
         var start = [
             parseInt(this.state.start.substring(0, 4)),
             parseInt(this.state.start.substring(5, 7)),
@@ -85,6 +87,7 @@ class Request extends Component {
         this.props.fireDB.child(`Employees/${this.props.empID}/vacations/${s}/reason`).set('none');
 
         this.props.fireDB.child(`vacationRequests/requests/${this.props.empID}`).remove();
+
     }
 
     rejectRequest() {
