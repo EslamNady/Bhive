@@ -66,7 +66,7 @@ class SystemSkills extends Component {
                     <button className="btn btn-primary ml-3" onClick={this.addSkill}>Add Skill</button>
                 </div>
                 <div className="skills-wrapper ml-2">
-                    <div className="skills-box">
+                    <div style={{ maxHeight: '120px', overflowY: 'auto' }} className="skills-box">
                         <div className="skills-box-insider d-flex flex-wrap justify-content-start">
                             {this.state.systemSkills.map((skill, i) => (
                                 <Skill key={i} onDelete={this.deleteSkill} id={skill.id} skill={skill} />

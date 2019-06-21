@@ -153,7 +153,7 @@ class SubmittedTask extends Component {
         console.log(this.props.task.note);
         return (
 
-            <div className="subTask">
+            <div className="subTask mb-3">
                 <div className="card">
                     <div className="card-header text-doted">
                         <h5>{this.props.task.name}</h5>

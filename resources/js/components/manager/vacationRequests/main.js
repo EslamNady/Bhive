@@ -20,6 +20,7 @@ class VacationRequests extends Component {
         if (!this.isEmpty(this.state.requests)) {
             return (
                 <React.Fragment>
+                    <hr />
                     <h4>Vacation requests</h4>
                     <ul className="list-group">
                         {Object.keys(this.state.requests).map((key, i) => (

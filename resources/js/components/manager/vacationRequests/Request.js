@@ -46,24 +46,6 @@ class Request extends Component {
     }
     approveRequest() {
         // hena sho8lek
-        axios({
-            method: "post",
-            url: "../vacationRequest/accept",
-            data: {
-                empID: this.props.empID,
-                start: this.state.start,
-                end: this.state.end,
-            }
-        })
-            .then(response => {
-
-                // this.props.fireDB.child(`vacationRequests/requests/${this.props.empID}`).remove();
-                console.log(response.data);
-
-            })
-            .catch(function (error) {
-                console.log(error.response.data);
-            });
 
         var start = [
             parseInt(this.state.start.substring(0, 4)),
@@ -71,8 +53,9 @@ class Request extends Component {
             parseInt(this.state.start.substring(8, 10))
         ]
         var s = this.convertDateToString(start);
+        var vacationDays = [];
         while (s != this.state.end) {
-            this.props.fireDB.child(`Employees/${this.props.empID}/vacations/${s}/reason`).set('none');
+            vacationDays.push(s);
             start[2]++;
             if (start[2] == 32) {
                 start[2] = 1;
@@ -84,9 +67,55 @@ class Request extends Component {
             }
             s = this.convertDateToString(start);
         }
-        this.props.fireDB.child(`Employees/${this.props.empID}/vacations/${s}/reason`).set('none');
+        vacationDays.push(s);
 
-        this.props.fireDB.child(`vacationRequests/requests/${this.props.empID}`).remove();
+        setTimeout(() => {
+            axios({
+                method: "post",
+                url: "../vacationRequest/accept",
+                data: {
+                    empID: this.props.empID,
+                    start: this.state.start,
+                    end: this.state.end,
+                    vacationDays: vacationDays,
+                }
+            })
+                .then(response => {
+                    var start = [
+                        parseInt(this.state.start.substring(0, 4)),
+                        parseInt(this.state.start.substring(5, 7)),
+                        parseInt(this.state.start.substring(8, 10))
+                    ]
+                    var s = this.convertDateToString(start);
+                    while (s != this.state.end) {
+                        this.props.fireDB.child(`Employees/${this.props.empID}/vacations/${s}/reason`).set('none');
+                        start[2]++;
+                        if (start[2] == 32) {
+                            start[2] = 1;
+                            start[1]++;
+                        }
+                        if (start[1] == 13) {
+                            start[1] = 1;
+                            start[0]++;
+                        }
+                        s = this.convertDateToString(start);
+                    }
+                    this.props.fireDB.child(`Employees/${this.props.empID}/vacations/${s}/reason`).set('none');
+                    this.props.fireDB.child(`vacationRequests/requests/${this.props.empID}`).remove();
+                    //fy 7aga 8areba .. en hwa 7t fl firebase el vacations
+                    // this.props.fireDB.child(`vacationRequests/requests/${this.props.empID}`).remove();
+                    console.log(response.data);
+
+                })
+                .catch(function (error) {
+                    console.log(error.response.data);
+                });
+
+        }, 500)
+
+
+
+
 
     }
 

@@ -37,7 +37,20 @@ class ProjectView extends Component {
             <div className="projectWrapper ">
                 <div className="project-info mb-3">
                     <div className="project-name">{this.state.project_name}</div>
-                    <div className="project-description ml-4 h5"><span className="font-weight-bold "> Project Description: &nbsp;&nbsp;</span>{this.state.project_description}</div>
+                    <div className="project-description ml-4 h5">
+                        <div className="row p-0 mx-0">
+                            <div className="col-2 pr-0 mr-0">
+
+                                <span className="font-weight-bold "> Project Description:</span>
+                            </div>
+                            <div className="col-10 pt-2 ml-0 pl-0">
+                                <div className='p-2 h6' style={{ maxHeight: '200px', overflowY: 'auto', border: '1px solid rgba(0,0,0,0.3)', borderRadius: '3px', boxShadow: ' 2px 4px 17px -10px rgba(0,0,0,0.75)' }}>
+
+                                    <div>{this.state.project_description}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div className="row px-0 mx-0 mt-2">
                     <div className="col-2 px-1 mx-0 ">

@@ -155,7 +155,7 @@ class EmployeesController extends Controller
         $taskDB->save();
 
         \DB::table('activity_timeline')->where('task_id', $task['id'])->where('employee_id', Auth::id())->update(array('submission_date' => $today,'time_score'=>$subScore,'submission_link' => $link, 'note' => $comment, 'submitted'=> true));
-        Session::flash('message', 'Task Submitted Success!');
+        Session::flash('message', 'Task is submitted successfully!');
         return new EmployeeResource($employee);
         
     }

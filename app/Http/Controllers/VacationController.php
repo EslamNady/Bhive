@@ -8,13 +8,13 @@ use Kreait\Firebase;
 use Kreait\Firebase\Factory;
 use Kreait\Firebase\ServiceAccount;
 use Kreait\Firebase\Database;
+use App\Task;
 use Datetime;
 use Carbon\Carbon;
 
 class VacationController extends Controller
 {
     public function accept(Request $request){
-        
         $serviceAccount = ServiceAccount::fromJsonFile(storage_path().'/json/bhive-7020b-firebase-adminsdk-rrhlt-fc9dfba6b6.json');
         $firebase = (new Factory)
         ->withServiceAccount($serviceAccount)
@@ -28,37 +28,27 @@ class VacationController extends Controller
         $end= Carbon::parse($request->end);
         $all_dates = array();
         $assignedTasks=array();
+        $assignedTasksID=array();
         $allTasks=$employee->tasks;
         foreach($allTasks as $taskk){
             while ($start->lte($end)){
                 $all_dates[] = $start->toDateString();
                 $task=$taskk->where('startDate','<=',$start->toDateString())->where('endDate','>=',$start->toDateString())->first();
                 if($task){      
-                    array_push($assignedTasks,$task->id);
+                    array_push($assignedTasks,$task);
+                    array_push($assignedTasksID,$task->id);
                     break;
                 }
-            }
-            $start->addDay();
-        }
-
-	    $vacations = $database->getReference('Employees')->getChild(preg_replace('/\./', ',', $employee->email))->getChild('vacations')->getValue();
-
-        //lw fe agaza
-        print_r($vacations);
-        if($vacations!==null){
-            foreach($vacations as $key => $value) {
-                
-                if($assignedTask->startDate<=Carbon::parse($key)&&Carbon::parse($key)<=$assignedTask->endDate)
-                    {
-                        $busy=true;
-                        break;
-                    }
+                $start->addDay();
             }
         }
+        
 
+        $vacations=$request->vacationDays;
 
+        print_r($assignedTasksID); //
 
-        $employee->tasks()->detach($assignedTasks);
+        $employee->tasks()->detach($assignedTasksID);
         foreach($assignedTasks as $assignedTask){
             
             for($e=1;$e<=$assignedTask->resources_number;$e++){
@@ -71,6 +61,21 @@ class VacationController extends Controller
             foreach($employees as $employee){
                 $activities=$employee->tasks;
                 $busy=false;
+
+                
+                //lw fe agaza
+                print_r($assignedTasks);
+        
+                if($vacations!==null){
+                    foreach($vacations as $value) {
+                        
+                        if($assignedTask->startDate<=Carbon::parse($value)&&Carbon::parse($value)<=$assignedTask->endDate)
+                            {
+                                $busy=true;
+                                break;
+                            }
+                    }
+                }
 
                 foreach($activities as $activity){
 

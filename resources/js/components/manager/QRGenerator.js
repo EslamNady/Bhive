@@ -47,7 +47,7 @@ class QRGenerator extends Component {
     }
     render() {
         return (
-            <div className="d-flex justify-content-center align-items-center" style={{ "height": "100vh" }}>
+            <div className="d-flex justify-content-center align-items-center" style={{ "height": "100vh", backgroundImage: 'url(/images/backgrounds/back.png)', backgroundSize: 'cover' }}>
                 <QRCode value={this.state.QrValue} size={300} bgColor="rgba(255,255,255,0.2)" />
             </div >
 
