@@ -20,25 +20,44 @@ class VacationRequest extends Component {
     }
 
     render() {
-        return (<div>
-            <h4>Vacation request</h4>
-            <div className='vacation-form'>
-                <div className="row">
-                    <div className="col-6">
-                        <span>From: </span>
-                        <input className='form-control' type='date' ref="start" />
+        return (
+            <React.Fragment>
+                <div>
+                    <h4>Vacation request</h4>
+                    <div className='vacation-form'>
+                        <div className="row">
+                            <div className="col-6">
+                                <span>From: </span>
+                                <input className='form-control' type='date' ref="start" />
+                            </div>
+                            <div className="col-6">
+                                <span>To: </span>
+                                <input className='form-control' type='date' ref="end" />
+                            </div>
+                        </div>
+                        <div className="text-center mt-2">
+                            <button className="btn btn-primary mt-2" onClick={this.sendRequest} data-toggle="modal" data-target="#confirmSend1">Send</button>
+                        </div>
                     </div>
-                    <div className="col-6">
-                        <span>To: </span>
-                        <input className='form-control' type='date' ref="end" />
+
+                    <hr />
+                </div>
+                <div className="modal fade" id="confirmSend1" tabIndex="-1" role="dialog" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered" role="document">
+                        <div className="modal-content">
+
+                            <div className="modal-body">
+                                <div className="text-success text-center">
+                                    Your request has been sent to your manager
+                                     </div>
+
+                            </div>
+
+                        </div>
                     </div>
                 </div>
-                <div className="text-center mt-2">
-                    <button className="btn btn-primary mt-2" onClick={this.sendRequest}>Send</button>
-                </div>
-            </div>
-            <hr />
-        </div>);
+            </React.Fragment>
+        );
     }
 }
 

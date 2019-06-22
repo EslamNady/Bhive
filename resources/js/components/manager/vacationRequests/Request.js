@@ -68,7 +68,6 @@ class Request extends Component {
             s = this.convertDateToString(start);
         }
         vacationDays.push(s);
-
         setTimeout(() => {
             axios({
                 method: "post",
@@ -102,8 +101,6 @@ class Request extends Component {
                     }
                     this.props.fireDB.child(`Employees/${this.props.empID}/vacations/${s}/reason`).set('none');
                     this.props.fireDB.child(`vacationRequests/requests/${this.props.empID}`).remove();
-                    //fy 7aga 8areba .. en hwa 7t fl firebase el vacations
-                    // this.props.fireDB.child(`vacationRequests/requests/${this.props.empID}`).remove();
                     console.log(response.data);
 
                 })

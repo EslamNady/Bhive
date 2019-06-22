@@ -24,7 +24,7 @@ class ReportBody extends Component {
     renderpdf(doc, i, len) {
         html2canvas(document.getElementById('page' + i)).then(canvas => {
             var imgData = canvas.toDataURL('image/png');
-            var pageHeight = doc.internal.pageSize.getHeight() * 4.5;
+            var pageHeight = doc.internal.pageSize.getHeight() * 4.0;
             var imgHeight = canvas.height;
             var heightLeft = imgHeight;
 
@@ -36,9 +36,9 @@ class ReportBody extends Component {
 
             while (heightLeft >= 0) {
                 position = heightLeft - imgHeight;
-                position /= 4.5;
+                position /= 4.0;
                 doc.addPage();
-                doc.addImage(imgData, 'PNG', 0, position + 7);
+                doc.addImage(imgData, 'PNG', 0, position + 10);
                 heightLeft -= pageHeight;
             }
 

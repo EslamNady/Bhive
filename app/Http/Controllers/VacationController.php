@@ -30,24 +30,24 @@ class VacationController extends Controller
         $assignedTasks=array();
         $assignedTasksID=array();
         $allTasks=$employee->tasks;
+
         foreach($allTasks as $taskk){
+            $start=Carbon::parse($request->start);
             while ($start->lte($end)){
                 $all_dates[] = $start->toDateString();
-                $task=$taskk->where('startDate','<=',$start->toDateString())->where('endDate','>=',$start->toDateString())->first();
-                if($task){      
-                    array_push($assignedTasks,$task);
-                    array_push($assignedTasksID,$task->id);
+                if(($taskk->startDate<=$start->toDateString())&&($taskk->endDate>=$start->toDateString())){      
+                    array_push($assignedTasks,$taskk);
+                    array_push($assignedTasksID,$taskk->id);
                     break;
                 }
+
                 $start->addDay();
             }
         }
         
 
-        $vacations=$request->vacationDays;
-
-        print_r($assignedTasksID); //
-
+        print_r($assignedTasksID); 
+        
         $employee->tasks()->detach($assignedTasksID);
         foreach($assignedTasks as $assignedTask){
             
@@ -57,19 +57,18 @@ class VacationController extends Controller
                 $minDistance=0;
                 $empID=null;
             
-            $employees=Employee::all();
+            $employees=Employee::where('id','<>',$employee->id)->get();
+            
             foreach($employees as $employee){
                 $activities=$employee->tasks;
                 $busy=false;
-
-                
                 //lw fe agaza
-                print_r($assignedTasks);
-        
+                $vacations = $database->getReference('Employees')->getChild(preg_replace('/\./', ',', $employee->email))->getChild('vacations')->getValue();
+                
                 if($vacations!==null){
-                    foreach($vacations as $value) {
+                    foreach($vacations as $key => $value) {
                         
-                        if($assignedTask->startDate<=Carbon::parse($value)&&Carbon::parse($value)<=$assignedTask->endDate)
+                        if($assignedTask->startDate<=Carbon::parse($key)&&Carbon::parse($key)<=$assignedTask->endDate)
                             {
                                 $busy=true;
                                 break;
@@ -88,6 +87,8 @@ class VacationController extends Controller
                     }
                 }
                 $found=false;
+                print_r($busy);
+
                 if(!$busy){
                     $empSkills=$employee->skills;
                     $taskSkills=$assignedTask->skills;
@@ -125,11 +126,16 @@ class VacationController extends Controller
 
                     
                 }
-                
+                // print_r($employee);
+
             }
+            print_r($empID);
+
             if($empID!==null)
+            {
+                print_r($empID);
                 $assignedTask->employees()->attach($empID);
-            
+            }
             }
 
         }
