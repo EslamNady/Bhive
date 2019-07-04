@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import NextVacationList from './NextVacationList'
 class VacationRequest extends Component {
     constructor(props) {
         super(props);
@@ -23,22 +24,31 @@ class VacationRequest extends Component {
         return (
             <React.Fragment>
                 <div>
-                    <h4>Vacation request</h4>
-                    <div className='vacation-form'>
-                        <div className="row">
-                            <div className="col-6">
-                                <span>From: </span>
-                                <input className='form-control' type='date' ref="start" />
-                            </div>
-                            <div className="col-6">
-                                <span>To: </span>
-                                <input className='form-control' type='date' ref="end" />
+                    <div className="row">
+                        <div className='col-6'>
+                            <h4>Vacation request</h4>
+                            <div className='vacation-form'>
+                                <div className="row">
+                                    <div className="col-6">
+                                        <span>From: </span>
+                                        <input className='form-control' type='date' ref="start" />
+                                    </div>
+                                    <div className="col-6">
+                                        <span>To: </span>
+                                        <input className='form-control' type='date' ref="end" />
+                                    </div>
+                                </div>
+                                <div className="text-center mt-2">
+                                    <button className="btn btn-primary mt-2" onClick={this.sendRequest} data-toggle="modal" data-target="#confirmSend1">Send</button>
+                                </div>
                             </div>
                         </div>
-                        <div className="text-center mt-2">
-                            <button className="btn btn-primary mt-2" onClick={this.sendRequest} data-toggle="modal" data-target="#confirmSend1">Send</button>
+                        <div className='col-6'>
+                            <NextVacationList fireDB={this.props.fireDB} empKey={this.props.email.replace(/\./g, ',')} />
                         </div>
+
                     </div>
+
 
                     <hr />
                 </div>
